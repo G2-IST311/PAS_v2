@@ -1,4 +1,4 @@
-package Model.Reports;
+package pas_v2.Models.Reports;
 
 import java.util.Date;
 import javax.swing.table.AbstractTableModel;

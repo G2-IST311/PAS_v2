@@ -1,9 +1,10 @@
-package Model.Reports;
+package pas_v2.Models.Reports;
 
-import Model.Visit;
+
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import pas_v2.Models.Visit;
 
 /**
  *

@@ -1,5 +1,5 @@
 
-package Model;
+package pas_v2.Models;
 
 /**
  * Each role is defined by the list of permitted functions

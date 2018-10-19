@@ -5,15 +5,28 @@
  */
 package pas_v2.Controllers;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import javafx.stage.Stage;
+import pas_v2.Models.Employee;
+import pas_v2.Models.EmployeeList;
 
 /**
  * FXML Controller class
@@ -22,19 +35,25 @@ import javafx.scene.control.TextField;
  */
 public class NewEmployeeController implements Initializable {
 
-    @FXML private Label MsgLabel;
+    @FXML Label MsgLabel;
     //private javax.swing.JList<String> RoleList;
-    @FXML private Button cnclBtn;
-    @FXML private PasswordField empPWField;
-    @FXML private TextField fNameTxtField;
+    @FXML Button cnclBtn;
+    @FXML PasswordField empPWField;
+    @FXML TextField fNameTxtField;
    
-    @FXML private TextField lNameTxtField;
-    @FXML private Button submitBtn;
+    @FXML TextField lNameTxtField;
+    @FXML Button submitBtn;
     
-    private MainMenuController MMC; 
-    public NewEmployeeController(MainMenuController _MMC)
-    {
-      MMC = _MMC;  
+    @FXML ToggleGroup role;
+    
+    
+    private EmployeeList employeeList;
+    private Employee currentEmployee;
+    
+    public void initData(Employee emp, EmployeeList employeeList){
+        this.employeeList = employeeList;
+        this.currentEmployee = emp;
+        
     }
     
     /**
@@ -42,11 +61,17 @@ public class NewEmployeeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        try { 
+            employeeList = new EmployeeList();
+            employeeList.refreshEmployeeList();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(NewEmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     } 
     
     
-    public void submitButtonClicked(ActionEvent ae){ 
+    public void submitButtonClicked(ActionEvent ae) throws IOException{ 
+        System.out.println("submit clicked");
 
           
         if(checkFields())
@@ -63,13 +88,39 @@ public class NewEmployeeController implements Initializable {
 
             else                
             {    
+                RadioButton selectedRadioButton = (RadioButton) role.getSelectedToggle();
+                String toogleGroupValue = selectedRadioButton.getText();
 
                 MsgLabel.setText("Submitted Successfully");
-                //MMC.saveEmployee(sdf.getRole(), fNameTxtField.getText(), lNameTxtField.getText(), empPWField.getText());
+
+                employeeList.saveEmployee(toogleGroupValue.toLowerCase(), fNameTxtField.getText(), lNameTxtField.getText(), empPWField.getText());
+
+                
+                navigateToStaffUI(ae);
                 
             }     
         }    
        
+    }
+    
+    public void navigateToStaffUI(ActionEvent event) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/pas_v2/Views/StaffUI.fxml"));
+        Parent tableViewParent = loader.load();
+        
+        Scene tableViewScene = new Scene(tableViewParent);
+        
+        //access the controller and call a method
+        StaffUIController controller = loader.getController();
+        controller.initData(currentEmployee, employeeList);
+        
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        window.setScene(tableViewScene);
+        window.show();
+        
     }
     
     public void resetFields()
