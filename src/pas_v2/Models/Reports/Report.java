@@ -1,11 +1,12 @@
-package Model.Reports;
+package pas_v2.Models.Reports;
 
-import Model.Pool;
-import Model.Visit;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import pas_v2.Models.Pool;
+import pas_v2.Models.Visit;
 
 /**
  *

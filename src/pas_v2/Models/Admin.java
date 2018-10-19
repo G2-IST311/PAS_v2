@@ -1,5 +1,4 @@
-package Model;
-
+package pas_v2.Models;
 
 /**
  *

@@ -1,7 +1,7 @@
-package Model;
+package pas_v2.Models;
 
-import Model.Reports.Report;
 import java.util.ArrayList;
+import pas_v2.Models.Reports.Report;
 
 /**
  *

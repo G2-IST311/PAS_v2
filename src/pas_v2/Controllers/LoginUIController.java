@@ -5,8 +5,7 @@
  */
 package pas_v2.Controllers;
 
-import Model.Employee;
-import Model.EmployeeList;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -18,6 +17,8 @@ import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import pas_v2.Models.Employee;
+import pas_v2.Models.EmployeeList;
 
 /**
  * FXML Controller class
@@ -97,17 +98,22 @@ public class LoginUIController implements Initializable {
     
     public void navigateToMainMenu(ActionEvent event) throws IOException
     {
-        //MainMenuController main = new MainMenuController(emp, employeeList);
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/pas_v2/Views/MainMenuUI.fxml"));
+        Parent tableViewParent = loader.load();
         
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/pas_v2/Views/MainMenuUI.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
         
+        //access the controller and call a method
+        MainMenuController controller = loader.getController();
+        controller.initData(currentEmployee, employeeList);
         
         //This line gets the Stage information
-        Stage mainMenuWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         
-        mainMenuWindow.setScene(tableViewScene);
-        mainMenuWindow.show();
+        window.setScene(tableViewScene);
+        window.show();
+        
     }
     
     public void quitBtnClicked(){

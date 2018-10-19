@@ -1,4 +1,4 @@
-package Model;
+package pas_v2.Models;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -19,6 +19,10 @@ public class EmployeeList {
         
         employees = fetchEmployeesFromFile();
 
+    }
+    
+    public EmployeeList getEmployeeList(){
+        return this;
     }
     
     public void addEmployee(Employee _employee){
@@ -59,7 +63,6 @@ public class EmployeeList {
         {
             String filename = "employees.txt";
             FileWriter fw = new FileWriter(filename,true);
-            //fw.write("\n"+type.toLowerCase()+"~"+firstName.toLowerCase()+";"+lastName.toLowerCase()+";"+password);
             fw.write("\n"+type+"~"+firstName+";"+lastName+";"+password);
 
             fw.close();
