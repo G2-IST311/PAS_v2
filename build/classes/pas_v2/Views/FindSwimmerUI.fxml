@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pas_v2.Controllers.FindSwimmerController">
+   <children>
+       <Button fx:id="registerSwimmerButton" layoutX="704.0" layoutY="541.0" mnemonicParsing="false" onAction="#RegisterSwimmerButtonClicked" prefHeight="38.0" prefWidth="206.0" text="Register New Swimmer" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="31.0">
+           <graphic>
+              <ImageView fx:id="newEmpIcon" fitHeight="28.0" fitWidth="22.0" layoutX="39.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true"> 
+                  <image>
+                      <Image backgroundLoading="true" url="/pas_v2/Resources/icons/new.png" />
+                  </image>
+              </ImageView> 
+           </graphic>
+           
+             </Button>
+   </children>
+</AnchorPane>
