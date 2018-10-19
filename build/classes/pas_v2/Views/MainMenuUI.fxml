@@ -1,43 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="pas_v2.Controllers.MainMenuController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pas_v2.Controllers.MainMenuController">
    <children>
       <MenuBar fx:id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="PAS">
             <items>
               <MenuItem fx:id="logoutButton" mnemonicParsing="false" onAction="#logoutBtnClicked" text="Log Out" />
-                  <MenuItem mnemonicParsing="false" text="Quit" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <TabPane layoutX="8.0" layoutY="29.0" prefHeight="571.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
-        <tabs>
-          <Tab text="Find Swimmer">
-            <fx:include fx:id="findSwimmerTabPage" source="FindSwimmerUI.fxml"/>
-          </Tab>
-          <Tab text="View Pool">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-            <Tab text="Reports">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-            <Tab text="Staff">
-               <fx:include fx:id="staffTabPage" source="StaffUI.fxml"/>
-            </Tab>
-        </tabs>
-      </TabPane>
+      <Pane layoutX="319.0" layoutY="166.0" prefHeight="373.0" prefWidth="282.0" AnchorPane.topAnchor="166.0">
+         <children>
+            <Button fx:id="findSwimmerBtn" layoutX="28.0" layoutY="38.0" mnemonicParsing="false" onAction="#findSwimmerBtnClicked" prefHeight="40.0" prefWidth="223.0" text="Find Swimmer" />
+            <Button fx:id="viewPoolBtn" layoutX="28.0" layoutY="125.0" mnemonicParsing="false" onAction="#viewPoolButtonClicked" prefHeight="40.0" prefWidth="223.0" text="View Pool" />
+            <Button fx:id="reportsBtn" layoutX="28.0" layoutY="211.0" mnemonicParsing="false" onAction="#reportsButtonClicked" prefHeight="40.0" prefWidth="223.0" text="Reports" />
+            <Button fx:id="staffButton" layoutX="28.0" layoutY="297.0" mnemonicParsing="false" onAction="#staffButtonClicked" prefHeight="40.0" prefWidth="223.0" text="Staff" />
+         </children>
+      </Pane>
+      <Pane layoutX="586.0" layoutY="516.0" prefHeight="73.0" prefWidth="303.0" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="11.0">
+         <children>
+            <Button fx:id="logoutBtn" layoutX="161.0" layoutY="9.0" mnemonicParsing="false" onAction="#logoutBtnClicked" prefHeight="46.0" prefWidth="124.0" text="Log out" />
+         </children>
+      </Pane>
+      <Pane layoutX="7.0" layoutY="47.0" prefHeight="81.0" prefWidth="388.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+         <children>
+            <Label fx:id="greetingLable" layoutX="51.0" layoutY="14.0" prefHeight="48.0" prefWidth="734.0" text="Welcome, [user]!">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Label fx:id="greetingLable1" alignment="CENTER" layoutX="295.0" layoutY="118.0" prefHeight="48.0" prefWidth="313.0" text="Main Menu" AnchorPane.topAnchor="118.0">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

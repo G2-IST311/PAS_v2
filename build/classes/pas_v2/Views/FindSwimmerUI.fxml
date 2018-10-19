@@ -20,5 +20,6 @@
            </graphic>
            
              </Button>
+      <Button fx:id="backButton" layoutX="560.0" layoutY="541.0" mnemonicParsing="false" onAction="#navigateToMainMenu" prefHeight="38.0" prefWidth="85.0" text="Back" />
    </children>
 </AnchorPane>
