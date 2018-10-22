@@ -9,8 +9,12 @@ import javafx.scene.image.Image;
  */
 public class Swimmer implements Serializable{
 
-    private String name, lastname, dob, address, city, zip, state, phone, em_firstname, em_lastname, em_phone, skill, status, note;
+    private String name, lastname, dob, address, city, zip, state, phone, em_firstname, em_lastname, em_phone, skill, status, note = "";
     private String photoPath;
+    
+    private String fullName;
+    private String fullAddress;
+    
     
     public Swimmer(String name, String lastname, String dob, String address, String city, String zip, String state, String phone, String em_firstname, String em_lastname, String em_phone, String skill, String status, String image) {
         this.name = name;
@@ -27,6 +31,18 @@ public class Swimmer implements Serializable{
         this.skill = skill;
         this.status = status;
         this.photoPath = image;
+        
+        this.fullName = name +" "+ lastname;
+        this.fullAddress = address+" "+city+" "+state+" "+zip+"";
+        
+                
+    }
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getFullAddress() {
+        return fullAddress;
     }
 
     /**

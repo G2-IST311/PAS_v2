@@ -7,7 +7,9 @@ package pas_v2.Controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,10 +18,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import pas_v2.Models.Employee;
 import pas_v2.Models.Pool;
 import pas_v2.Models.RoleEnum;
+import pas_v2.Models.Swimmer;
 
 /**
  * FXML Controller class
@@ -28,17 +32,44 @@ import pas_v2.Models.RoleEnum;
  */
 public class FindSwimmerController implements Initializable {
 
+    
     @FXML Button registerSwimmerButton;
+    @FXML private TableView tableView;
+    
+    @FXML private TableColumn<Swimmer, String> nameCol;
+    @FXML private TableColumn<Swimmer, String> addressCol;
+    @FXML private TableColumn<Swimmer, String> ageCol;
+    @FXML private TableColumn<Swimmer, String> skillCol;
+    @FXML private TableColumn<Swimmer, String> statusCol;
+    @FXML private TableColumn<Swimmer, String> visitCol;
+    @FXML private TableColumn<Swimmer, String> noteCol;
+
+    
+    
     private Employee currentEmployee;
     private Pool pool;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        this.pool = new Pool();
         
-    }   
+        nameCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("fullName"));
+        ageCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("dob"));
+        addressCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("fullAddress"));
+        skillCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("skill"));
+        statusCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("status"));
+        visitCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("visit"));
+        noteCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("note"));
+
+
+        tableView.getItems().setAll(pool.getSwimmers());
+        
+    } 
+    
     
     public void initData(Employee emp, Pool pool){
         this.currentEmployee=emp;
