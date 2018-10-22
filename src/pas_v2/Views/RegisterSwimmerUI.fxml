@@ -197,20 +197,18 @@
                   </ChoiceBox>
                </children>
             </VBox>
-            <ImageView fx:id="image" fitHeight="114.0" fitWidth="140.0" layoutX="133.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
-               <effect>
-                  <Shadow />
-               </effect></ImageView>
-            <Button fx:id="uploadButton" layoutX="135.0" layoutY="203.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="136.0" text="Upload photo" />
+            <ImageView fx:id="imageView" fitHeight="113.0" fitWidth="140.0" layoutX="133.0" layoutY="81.0" pickOnBounds="true" />
+            <Button fx:id="uploadButton" layoutX="135.0" layoutY="203.0" mnemonicParsing="false" onAction="#selectPhotoButtonClicked" prefHeight="27.0" prefWidth="136.0" text="Upload photo" />
             <TextArea fx:id="note" layoutX="31.0" layoutY="257.0" prefHeight="123.0" prefWidth="242.0" />
             <Label layoutX="30.0" layoutY="235.0" text="Add a note:" />
          </children>
       </Pane>
-      <Pane layoutX="545.0" layoutY="506.0" prefHeight="64.0" prefWidth="569.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Pane layoutX="545.0" layoutY="506.0" prefHeight="86.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button fx:id="createButton" layoutX="769.0" layoutY="16.0" mnemonicParsing="false" onAction="#createSwimmerButtonClicked" prefHeight="32.0" prefWidth="92.0" text="Create" />
-            <Button fx:id="cancelBtn" layoutX="662.0" layoutY="16.0" mnemonicParsing="false" onAction="#navigateToFindSwimmer" prefHeight="32.0" prefWidth="92.0" text="Cancel" />
-            <Label fx:id="messageLbl" layoutX="277.0" layoutY="24.0" prefHeight="17.0" prefWidth="342.0" textFill="#e10f0f" />
+            <Button fx:id="createButton" layoutX="769.0" layoutY="33.0" mnemonicParsing="false" onAction="#createSwimmerButtonClicked" prefHeight="32.0" prefWidth="92.0" text="Create" />
+            <Button fx:id="cancelBtn" layoutX="662.0" layoutY="33.0" mnemonicParsing="false" onAction="#navigateToFindSwimmer" prefHeight="32.0" prefWidth="92.0" text="Cancel" />
+            <Label fx:id="messageLbl" layoutX="277.0" layoutY="41.0" prefHeight="17.0" prefWidth="342.0" textFill="#e10f0f" />
+            <Label fx:id="waitLbl" layoutX="798.0" layoutY="8.0" />
          </children>
       </Pane>
    </children>

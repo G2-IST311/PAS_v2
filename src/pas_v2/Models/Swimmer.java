@@ -1,15 +1,18 @@
 package pas_v2.Models;
 
+import java.io.Serializable;
+import javafx.scene.image.Image;
+
 /**
  *
- * @author d.mikhaylov
+ * @author d.mikhaylov, David Ortiz
  */
-public class Swimmer {
+public class Swimmer implements Serializable{
 
     private String name, lastname, dob, address, city, zip, state, phone, em_firstname, em_lastname, em_phone, skill, status, note;
-
+    private String photoPath;
     
-    public Swimmer(String name, String lastname, String dob, String address, String city, String zip, String state, String phone, String em_firstname, String em_lastname, String em_phone, String skill, String status) {
+    public Swimmer(String name, String lastname, String dob, String address, String city, String zip, String state, String phone, String em_firstname, String em_lastname, String em_phone, String skill, String status, String image) {
         this.name = name;
         this.lastname = lastname;
         this.dob = dob;
@@ -23,6 +26,7 @@ public class Swimmer {
         this.em_phone = em_phone;
         this.skill = skill;
         this.status = status;
+        this.photoPath = image;
     }
 
     /**
@@ -84,8 +88,13 @@ public class Swimmer {
         return note;
     }
     
+    public String getPhotoPath() {
+        return photoPath;
+    }
+    
     public String getSwimmerInformation(){
-        String temp = name + " " + lastname + ", " +  dob+ ", " +  address+ ", " +  city+ ", " +  zip+ ", " +  state+ ", " +  phone+ ", " +  em_firstname+ ", " +  em_lastname+ ", " +  em_phone+ ", " +  skill+ ", " +  status;
+        String temp = name + " " + lastname + ", " +  dob+ ", " +  address+ ", " +  city+ ", " +  zip+ ", " +  state+ ", " +  phone+ ", " +  skill+ ", " +  status +".\nPhoto: "+ this.photoPath + ".\nEmergency contact: " + em_firstname+ ", " +  em_lastname+ ", " +  em_phone;
+        
 
         return temp;
     }
@@ -149,6 +158,10 @@ public class Swimmer {
     
     public void setNote(String note){
         this.note = note;
+    }
+
+    public void setPhotoPath(String photo) {
+        this.photoPath = photo;
     }
 
     
