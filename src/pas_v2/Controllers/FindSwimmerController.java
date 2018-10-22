@@ -5,11 +5,6 @@
  */
 package pas_v2.Controllers;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,9 +16,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import pas_v2.Models.Employee;
+import pas_v2.Models.Pool;
 import pas_v2.Models.RoleEnum;
 
 /**
@@ -34,7 +29,8 @@ import pas_v2.Models.RoleEnum;
 public class FindSwimmerController implements Initializable {
 
     @FXML Button registerSwimmerButton;
-    Employee currentEmployee;
+    private Employee currentEmployee;
+    private Pool pool;
     /**
      * Initializes the controller class.
      */
@@ -44,24 +40,33 @@ public class FindSwimmerController implements Initializable {
         
     }   
     
-    public void initData(Employee emp){
+    public void initData(Employee emp, Pool pool){
         this.currentEmployee=emp;
+        this.pool = pool;
         
         registerSwimmerButton.setDisable(!currentEmployee.isFunctionPermitted(RoleEnum.CREATE_PROFILE));
     }
     
     public void RegisterSwimmerButtonClicked(ActionEvent event) throws IOException{
         System.out.println("Register Swimmer");
-        /*
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/pas_v2/Views/RegisterSwimmerUI.fxml"));
-        Scene tableViewScene = new Scene(tableViewParent);
+        
+        
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/pas_v2/Views/RegisterSwimmerUI.fxml"));
+        Parent viewParent = loader.load();
+        
+        Scene registerSwimmerScene = new Scene(viewParent);
+        
+        //access the controller and call a method
+        RegisterSwimmerController controller = loader.getController();
+        controller.initData(currentEmployee, pool);
         
         //This line gets the Stage information
-        Stage newEmployeeWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-        newEmployeeWindow.setScene(tableViewScene);
-        newEmployeeWindow.show();
-        */
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        window.setScene(registerSwimmerScene);
+        window.show();
+        
         
     }
     
@@ -76,6 +81,7 @@ public class FindSwimmerController implements Initializable {
         //access the controller and call a method
         MainMenuController controller = loader.getController();
         controller.setEmployee(currentEmployee);
+        controller.setPool(pool);
         
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

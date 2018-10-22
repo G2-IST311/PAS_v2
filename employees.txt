@@ -2,5 +2,3 @@ admin~Dwight;Schrute;sheriff
 admin~Michael;Scott;mypass
 operator~Spongebob;Squarepants;pineapple
 operator~Patrick;Star;rock
-operator~test;asdf;test
-operator~david;ortiz;test

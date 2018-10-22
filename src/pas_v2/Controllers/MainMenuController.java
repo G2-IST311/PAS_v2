@@ -22,6 +22,7 @@ import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
 import pas_v2.Models.Employee;
 import pas_v2.Models.EmployeeList;
+import pas_v2.Models.Pool;
 import pas_v2.Models.RoleEnum;
 
 /**
@@ -40,6 +41,7 @@ public class MainMenuController implements Initializable {
     
     private Employee currentEmployee;
     private EmployeeList employeeList;
+    private Pool pool;
 
     
     public void initData(Employee emp, EmployeeList employeeList){
@@ -48,9 +50,8 @@ public class MainMenuController implements Initializable {
         
         welcome(emp.getFirstName());
         
-        //System.out.println(currentEmployee.getFirstName());
 
-        //reportsBtn.setDisable(!currentEmployee.isFunctionPermitted(RoleEnum.VIEW_REPORTS));
+        reportsBtn.setDisable(!currentEmployee.isFunctionPermitted(RoleEnum.VIEW_REPORTS));
         
     }
     
@@ -58,6 +59,8 @@ public class MainMenuController implements Initializable {
         this.currentEmployee = emp;
         
         welcome(emp.getFirstName());
+        reportsBtn.setDisable(!currentEmployee.isFunctionPermitted(RoleEnum.VIEW_REPORTS));
+
     }
     
      /**
@@ -65,8 +68,19 @@ public class MainMenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        pool = new Pool();
     } 
+    
+    public Pool getPool(){
+        return this.pool;
+    }
+    
+    public void setPool(Pool pool){
+        this.pool = pool;
+        
+        //System.out.println(pool.getSwimmers().get(0).getSwimmerInformation());
+
+    }
     
     public void findSwimmerBtnClicked(ActionEvent event) throws IOException
     {
@@ -78,7 +92,7 @@ public class MainMenuController implements Initializable {
         
         //access the controller and call a method
         FindSwimmerController controller = loader.getController();
-        controller.initData(currentEmployee);
+        controller.initData(currentEmployee, pool);
         
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -117,7 +131,7 @@ public class MainMenuController implements Initializable {
     
     public void reportsButtonClicked(ActionEvent event) throws IOException
     {
-        System.out.println("Staff Button Clicked");
+        System.out.println("Reports Button Clicked");
         
     }
     
