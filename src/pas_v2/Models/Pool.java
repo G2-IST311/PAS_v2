@@ -37,10 +37,18 @@ public class Pool {
 
                 }
         
-        printSwimmerList();
+        //printSwimmerList();
+    }
+    //selectedSwimmer, updatedSwimmer
+    public void updateSwimmer(Swimmer originalSwimmer, Swimmer updatedSwimmer){
+        swimmers.set(swimmers.indexOf(originalSwimmer), updatedSwimmer);
+        
     }
     
-    
+    public void deleteSwimmer(Swimmer swimmer){
+        swimmers.remove(swimmer);
+        swimmers.trimToSize();
+    }
     
     public void readSwimmerListFile(){
         FileInputStream fis = null;
@@ -50,9 +58,9 @@ public class Pool {
             in = new ObjectInputStream(fis);
             swimmers = (ArrayList)in.readObject();
             in.close();
-            if(!swimmers.isEmpty()){
-                System.out.println("There are swimmers in the swimmer list");
-            }
+//            if(!swimmers.isEmpty()){
+//                System.out.println("There are swimmers in the swimmer list");
+//            }
         }
         catch(IOException ex){
             System.out.println(listOfSwimmersFileName + " not found, creating.");
@@ -83,6 +91,8 @@ public class Pool {
             System.out.println(currentUser.getSwimmerInformation());
         }
     }
+    
+    
 
     /**
      * @return the report
