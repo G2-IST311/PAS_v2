@@ -112,8 +112,6 @@ public class RegisterSwimmerController implements Initializable {
             this.messageLbl.setText("Failed up upload image. Try again.");
         }
         
-        
-        
     }
     
     public void saveToFile(BufferedImage image) {
