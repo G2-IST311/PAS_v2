@@ -32,7 +32,7 @@ import pas_v2.Models.Swimmer;
  */
 public class FindSwimmerController implements Initializable {
 
-    
+    @FXML Button viewProfileBtn;
     @FXML Button registerSwimmerButton;
     @FXML private TableView tableView;
     
@@ -99,6 +99,31 @@ public class FindSwimmerController implements Initializable {
         window.show();
         
         
+    }
+    
+    public void viewProfileBtnClicked(ActionEvent event) throws IOException{
+        System.out.println(tableView.getSelectionModel().getSelectedItem());
+        
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/pas_v2/Views/ViewSwimmerProfileUI.fxml"));
+        Parent tableViewParent = loader.load();
+        
+        Scene tableViewScene = new Scene(tableViewParent);
+        
+        //access the controller and call a method
+        ViewSwimmerProfileController controller = loader.getController();
+        controller.initData(currentEmployee, (Swimmer)tableView.getSelectionModel().getSelectedItem(), pool);
+        
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        window.setScene(tableViewScene);
+        window.show();
+        
+    }
+    
+    public void userClickedTable(){
+        viewProfileBtn.setDisable(false);
     }
     
     public void navigateToMainMenu(ActionEvent event) throws IOException

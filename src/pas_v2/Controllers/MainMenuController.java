@@ -78,7 +78,6 @@ public class MainMenuController implements Initializable {
     public void setPool(Pool pool){
         this.pool = pool;
         
-        //System.out.println(pool.getSwimmers().get(0).getSwimmerInformation());
 
     }
     
