@@ -1,5 +1,4 @@
 
-*.properties
-*.html
-*.jar
-*.jnlp
+/PAS_v2/nbproject/private/
+/PAS_v2/build/
+/PAS_v2/dist/
