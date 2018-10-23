@@ -44,8 +44,6 @@ public class FindSwimmerController implements Initializable {
     @FXML private TableColumn<Swimmer, String> visitCol;
     @FXML private TableColumn<Swimmer, String> noteCol;
 
-    
-    
     private Employee currentEmployee;
     private Pool pool;
 
@@ -65,7 +63,6 @@ public class FindSwimmerController implements Initializable {
         visitCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("visit"));
         noteCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("note"));
 
-
         tableView.getItems().setAll(pool.getSwimmers());
         
     } 
@@ -75,6 +72,8 @@ public class FindSwimmerController implements Initializable {
         this.currentEmployee=emp;
         this.pool = pool;
         
+        tableView.getItems().setAll(pool.getSwimmers());
+
         registerSwimmerButton.setDisable(!currentEmployee.isFunctionPermitted(RoleEnum.CREATE_PROFILE));
     }
     
@@ -102,7 +101,6 @@ public class FindSwimmerController implements Initializable {
     }
     
     public void viewProfileBtnClicked(ActionEvent event) throws IOException{
-        System.out.println(tableView.getSelectionModel().getSelectedItem());
         
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/pas_v2/Views/ViewSwimmerProfileUI.fxml"));
@@ -112,13 +110,19 @@ public class FindSwimmerController implements Initializable {
         
         //access the controller and call a method
         ViewSwimmerProfileController controller = loader.getController();
-        controller.initData(currentEmployee, (Swimmer)tableView.getSelectionModel().getSelectedItem(), pool);
         
-        //This line gets the Stage information
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        try{
+            controller.initData(currentEmployee, (Swimmer)tableView.getSelectionModel().getSelectedItem(), pool);
+            //This line gets the Stage information
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            window.setScene(tableViewScene);
+            window.show();
+        } catch(NullPointerException e){
+            System.out.println("No swimmer selected!");
+        }
         
-        window.setScene(tableViewScene);
-        window.show();
+        
         
     }
     
