@@ -45,9 +45,29 @@ public class Pool {
         
     }
     
+    public void changeSwimmerStatus(Swimmer tempSwimmer, boolean status){
+        swimmers.get(swimmers.indexOf(tempSwimmer)).setCheckedStatus(status);
+        
+        this.writeSwimmerListFile();
+    }
+    
+    
+    
     public void deleteSwimmer(Swimmer swimmer){
         swimmers.remove(swimmer);
         swimmers.trimToSize();
+    }
+    
+    public ArrayList<Swimmer> searchSwimmer(String keyword){
+        ArrayList<Swimmer> tempList = new ArrayList<>();
+        
+        for(Swimmer s : swimmers){
+            if(s.getSwimmerInformation().toLowerCase().contains(keyword.toLowerCase())){
+                tempList.add(s);
+            }
+        }
+        
+        return tempList;
     }
     
     public void readSwimmerListFile(){

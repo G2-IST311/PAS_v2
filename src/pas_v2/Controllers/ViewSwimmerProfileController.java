@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.embed.swing.SwingFXUtils;
@@ -28,8 +29,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -39,6 +43,7 @@ import pas_v2.Models.Employee;
 import pas_v2.Models.Pool;
 import pas_v2.Models.RoleEnum;
 import pas_v2.Models.Swimmer;
+import pas_v2.Models.Visit;
 
 /**
  * FXML Controller class
@@ -55,8 +60,9 @@ public class ViewSwimmerProfileController implements Initializable {
     private File filePathFromUser;
     
     private boolean photoChanged = false;
+    private ArrayList<Visit> visits;
     
-    
+    @FXML Label statusLabel;
     @FXML Label userLabel;
     @FXML TextField firstName;
     @FXML TextField surname;
@@ -81,12 +87,26 @@ public class ViewSwimmerProfileController implements Initializable {
 
     @FXML Label messageLbl;
     
+    @FXML TableView historyTable;
+    @FXML private TableColumn<Visit, String> dateCol;
+    @FXML private TableColumn<Visit, String> checkinCol;
+    @FXML private TableColumn<Visit, String> durationCol;
+    @FXML private TableColumn<Visit, String> checkoutCol;
+    
+    
+    
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        visits = new ArrayList<>();
         
+        dateCol.setCellValueFactory(new PropertyValueFactory<Visit, String>("day"));
+        checkinCol.setCellValueFactory(new PropertyValueFactory<Visit, String>("checkInTime"));
+        durationCol.setCellValueFactory(new PropertyValueFactory<Visit, String>("duration"));
+        checkoutCol.setCellValueFactory(new PropertyValueFactory<Visit, String>("checkOutTime"));
     }    
     
     public void initData(Employee emp, Swimmer swimmer, Pool pool){
@@ -94,9 +114,11 @@ public class ViewSwimmerProfileController implements Initializable {
         this.selectedSwimmer = swimmer;
         this.pool = pool;
         
+        visits = selectedSwimmer.getVisits();
+        historyTable.getItems().setAll(visits);
+
         setFields(this.selectedSwimmer);
         toggleEditableFields(currentEmployee.isFunctionPermitted(RoleEnum.EDIT_PROFILE));
-        
         
     }
     
@@ -154,6 +176,7 @@ public class ViewSwimmerProfileController implements Initializable {
 	//convert String to LocalDate
 	LocalDate localDate = LocalDate.parse(swimmer.getDob(), formatter);
         
+        statusLabel.setText(swimmer.getCheckedStatus());
         userLabel.setText(swimmer.getName());
         firstName.setText(swimmer.getName());
         surname.setText(swimmer.getLastname());

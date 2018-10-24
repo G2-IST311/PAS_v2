@@ -1,6 +1,8 @@
 package pas_v2.Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import javafx.scene.image.Image;
 
 /**
@@ -15,8 +17,18 @@ public class Swimmer implements Serializable{
     private String fullName;
     private String fullAddress;
     
+    private String checkedStatus = "Checked out";
+    private Date CheckedInDate;
+    private Date CheckedOutDate;
+    
+    private ArrayList<Visit> visits;
+
+    private Visit currentVisit;
+    
     
     public Swimmer(String name, String lastname, String dob, String address, String city, String zip, String state, String phone, String em_firstname, String em_lastname, String em_phone, String skill, String status, String image) {
+        visits = new ArrayList<>();
+        
         this.name = name;
         this.lastname = lastname;
         this.dob = dob;
@@ -35,8 +47,46 @@ public class Swimmer implements Serializable{
         this.fullName = name +" "+ lastname;
         this.fullAddress = address+" "+city+" "+state+" "+zip+"";
         
-                
+        
     }
+
+    public String getCheckedStatus() {
+        return this.checkedStatus;
+    }
+
+    public void setCheckedStatus(boolean _checkedStatus) {
+        Date now = new Date();
+        
+        if(_checkedStatus){
+            this.checkedStatus = "Checked in";
+
+            CheckedInDate = now;
+            currentVisit = new Visit(this.CheckedInDate);
+            
+        } else {
+            this.checkedStatus = "Checked out";
+
+            CheckedOutDate = now;
+            
+            currentVisit.setCheckOut(CheckedOutDate);
+            visits.add(currentVisit);
+            
+        }
+        
+    }
+    
+    
+    public ArrayList<Visit> getVisits(){
+        return this.visits;
+    }
+    
+    public void setVisits(ArrayList<Visit> _visits){
+        this.visits = _visits;
+    }
+    
+    
+    
+    
     public String getFullName() {
         return fullName;
     }
@@ -109,7 +159,7 @@ public class Swimmer implements Serializable{
     }
     
     public String getSwimmerInformation(){
-        String temp = name + " " + lastname + ", " +  dob+ ", " +  address+ ", " +  city+ ", " +  zip+ ", " +  state+ ", " +  phone+ ", " +  skill+ ", " +  status +".\nPhoto: "+ this.photoPath + ".\nEmergency contact: " + em_firstname+ ", " +  em_lastname+ ", " +  em_phone;
+        String temp = name + " " + lastname + ", " +  dob+ ", " +  address+ ", " +  city+ ", " +  zip+ ", " +  state+ ", " +  phone+ ", " +  skill+ ", " +  status +", " +note +", "+ checkedStatus;
         
 
         return temp;
