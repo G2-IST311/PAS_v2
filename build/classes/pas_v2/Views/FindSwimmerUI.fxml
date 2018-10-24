@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pas_v2.Controllers.FindSwimmerController">
    <children>
-      <HBox layoutX="596.0" layoutY="544.0" prefHeight="56.0" prefWidth="332.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="4.0">
+      <HBox layoutX="596.0" layoutY="544.0" prefHeight="56.0" prefWidth="323.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="4.0">
          <children>
             <Button fx:id="backButton" mnemonicParsing="false" onAction="#navigateToMainMenu" prefHeight="38.0" prefWidth="85.0" text="Back" />
              <Button fx:id="registerSwimmerButton" mnemonicParsing="false" onAction="#RegisterSwimmerButtonClicked" prefHeight="38.0" prefWidth="206.0" text="Register New Swimmer">
@@ -49,7 +49,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="27.0" prefWidth="688.0" promptText="Search by name, address, phone number, status or notes">
+                  <TextField fx:id="searchField" onKeyReleased="#performSearch" prefHeight="27.0" prefWidth="688.0" promptText="Search by name, date of birth, address, phone number, status, skill level, or notes">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -66,7 +66,7 @@
                 <TableColumn fx:id="addressCol" prefWidth="258.0" text="Address" />
                   <TableColumn fx:id="skillCol" prefWidth="89.0" text="Skill Level" />
                   <TableColumn fx:id="statusCol" prefWidth="85.0" text="Status" />
-                  <TableColumn fx:id="visitCol" prefWidth="96.0" text="Visit" />
+                  <TableColumn fx:id="visitStatusCol" prefWidth="96.0" text="Visit" />
                   <TableColumn fx:id="noteCol" prefWidth="137.0" text="Notes" />
               </columns>
                <VBox.margin>
@@ -87,6 +87,8 @@
               </rowConstraints>
                <children>
                   <Button fx:id="viewProfileBtn" disable="true" mnemonicParsing="false" onAction="#viewProfileBtnClicked" prefHeight="27.0" prefWidth="136.0" text="View Profile" GridPane.columnIndex="5" />
+                  <Button fx:id="checkoutButton" disable="true" mnemonicParsing="false" onAction="#checkoutButtonClicked" prefHeight="27.0" prefWidth="136.0" text="Check out" GridPane.columnIndex="3" />
+                  <Button fx:id="checkinButton" disable="true" layoutX="461.0" layoutY="5.0" mnemonicParsing="false" onAction="#checkinButtonClicked" prefHeight="27.0" prefWidth="136.0" text="Check in" GridPane.columnIndex="2" />
                </children>
                <VBox.margin>
                   <Insets top="9.0" />

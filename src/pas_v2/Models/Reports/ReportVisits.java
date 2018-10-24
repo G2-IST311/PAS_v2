@@ -28,9 +28,10 @@ public class ReportVisits extends AbstractReport {
         allVisits = super.report.getAllVisits();
 
         startDate = super.report.getStartDate();
+        
         endDate = super.report.getEndDate();
         selectedVisits = allVisits.stream()
-                .filter(v -> (v.getCheckInTime().after(startDate) && v.getCheckInTime().before(endDate)))
+                .filter(v -> (v.getCheckinDate().after(startDate) && v.getCheckoutDate().before(endDate)))
                 .collect(Collectors.toList());
     }
 
