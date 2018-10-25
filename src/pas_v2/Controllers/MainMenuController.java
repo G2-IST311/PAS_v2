@@ -145,7 +145,7 @@ public class MainMenuController implements Initializable {
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("/pas_v2/Views/LoginUI.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
         
-        Stage logoutWindow = (Stage)menuBar.getScene().getWindow();
+        Stage logoutWindow = (Stage) menuBar.getScene().getWindow();
 
         logoutWindow.setScene(tableViewScene);
         logoutWindow.show();

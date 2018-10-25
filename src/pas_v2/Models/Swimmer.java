@@ -16,6 +16,7 @@ public class Swimmer implements Serializable{
     
     private String fullName;
     private String fullAddress;
+    private GenderEnum gender;
     
     private String checkedStatus = "Checked out";
     private Date CheckedInDate;
@@ -26,11 +27,12 @@ public class Swimmer implements Serializable{
     private Visit currentVisit;
     
     
-    public Swimmer(String name, String lastname, String dob, String address, String city, String zip, String state, String phone, String em_firstname, String em_lastname, String em_phone, String skill, String status, String image) {
+    public Swimmer(String name, String lastname, GenderEnum sex, String dob, String address, String city, String zip, String state, String phone, String em_firstname, String em_lastname, String em_phone, String skill, String status, String image) {
         visits = new ArrayList<>();
         
         this.name = name;
         this.lastname = lastname;
+        this.gender = sex;
         this.dob = dob;
         this.address = address;
         this.city = city;
@@ -90,7 +92,7 @@ public class Swimmer implements Serializable{
     public String getFullName() {
         return fullName;
     }
-
+     
     public String getFullAddress() {
         return fullAddress;
     }
@@ -106,6 +108,10 @@ public class Swimmer implements Serializable{
         return lastname;
     }
 
+    public GenderEnum getGender() {
+        return this.gender;
+    }
+    
     public String getDob() {
         return dob;
     }
@@ -159,7 +165,9 @@ public class Swimmer implements Serializable{
     }
     
     public String getSwimmerInformation(){
-        String temp = name + " " + lastname + ", " +  dob+ ", " +  address+ ", " +  city+ ", " +  zip+ ", " +  state+ ", " +  phone+ ", " +  skill+ ", " +  status +", " +note +", "+ checkedStatus;
+        String temp = name + " " + lastname + ", " + this.gender.getValue() + ", " 
+                +  dob+ ", " +  address+ ", " +  city+ ", " +  zip+ ", " +  state+ ", "
+                +  phone+ ", " +  skill+ ", " +  status +", " +note +", "+ checkedStatus;
         
 
         return temp;
@@ -178,6 +186,11 @@ public class Swimmer implements Serializable{
         this.lastname = lastname;
     }
 
+    public void setGender(GenderEnum sex) {
+        this.gender = sex;
+    }
+    
+    
     public void setDob(String dob) {
         this.dob = dob;
     }

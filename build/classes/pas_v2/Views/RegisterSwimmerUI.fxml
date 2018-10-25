@@ -159,6 +159,12 @@
          <children>
             <VBox alignment="TOP_RIGHT" layoutX="47.0" layoutY="17.0" prefHeight="61.0" prefWidth="81.0">
                <children>
+                  <Label text="Gender:">
+                     <padding>
+                        <Insets bottom="15.0" />
+                     </padding>
+                  </Label>
+                   
                   <Label text="Skill Level:">
                      <padding>
                         <Insets bottom="15.0" />
@@ -173,6 +179,15 @@
             </VBox>
             <VBox layoutX="135.0" layoutY="14.0" prefHeight="61.0" prefWidth="140.0">
                <children>
+                   
+                    <ChoiceBox fx:id="gender" prefHeight="27.0" prefWidth="136.0">
+                       <items>
+                            <FXCollections fx:factory="observableArrayList">
+                            </FXCollections>
+                         </items>
+                   </ChoiceBox>
+                   
+                   
                    <ChoiceBox fx:id="skill" prefHeight="27.0" prefWidth="136.0">
                        <items>
                             <FXCollections fx:factory="observableArrayList">

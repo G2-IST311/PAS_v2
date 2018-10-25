@@ -43,6 +43,7 @@ public class FindSwimmerController implements Initializable {
     @FXML private TextField searchField;
     
     @FXML private TableColumn<Swimmer, String> nameCol;
+    @FXML private TableColumn<Swimmer, String> genderCol;
     @FXML private TableColumn<Swimmer, String> addressCol;
     @FXML private TableColumn<Swimmer, String> ageCol;
     @FXML private TableColumn<Swimmer, String> skillCol;
@@ -62,6 +63,7 @@ public class FindSwimmerController implements Initializable {
         this.pool = new Pool();
         
         nameCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("fullName"));
+        genderCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("gender"));
         ageCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("dob"));
         addressCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("fullAddress"));
         skillCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("skill"));
