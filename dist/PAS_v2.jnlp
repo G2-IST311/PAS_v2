@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="PAS_v2.jar" size="4281135" download="eager" />
+    <jar href="PAS_v2.jar" size="4282524" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="PAS_v2" >
     <param name="requiredFXVersion" value="8.0+"/>
