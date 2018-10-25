@@ -5,10 +5,11 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
- * @author d.mikhaylov
+ * @author d.mikhaylov, David Ortiz
  */
 public class Visit implements Serializable{
 
@@ -42,10 +43,13 @@ public class Visit implements Serializable{
         return this.day;
     }
     
-    public double getDuration(){
-        double diff = checkOutTime.getTime() - checkInTime.getTime();
-
-        return diff / (60 * 1000) % 60;
+    public long getDuration(){
+        
+        TimeUnit timeUnit= TimeUnit.MINUTES;
+        
+        long diffInMillies = checkOutTime.getTime() - checkInTime.getTime();
+        return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
+  
     }
     
 
