@@ -1,6 +1,8 @@
 package pas_v2.Models;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import javafx.scene.image.Image;
@@ -25,7 +27,7 @@ public class Swimmer implements Serializable{
     private ArrayList<Visit> visits;
 
     private Visit currentVisit;
-    
+
     
     public Swimmer(String name, String lastname, GenderEnum sex, String dob, String address, String city, String zip, String state, String phone, String em_firstname, String em_lastname, String em_phone, String skill, String status, String image) {
         visits = new ArrayList<>();
@@ -76,8 +78,15 @@ public class Swimmer implements Serializable{
         }
         
     }
-    
-    
+
+    public Visit getCurrentVisit() {
+        return currentVisit;
+    }
+
+    public void setCurrentVisit(Visit currentVisit) {
+        this.currentVisit = currentVisit;
+    }
+
     public ArrayList<Visit> getVisits(){
         return this.visits;
     }
@@ -85,9 +94,6 @@ public class Swimmer implements Serializable{
     public void setVisits(ArrayList<Visit> _visits){
         this.visits = _visits;
     }
-    
-    
-    
     
     public String getFullName() {
         return fullName;
@@ -242,9 +248,4 @@ public class Swimmer implements Serializable{
     public void setPhotoPath(String photo) {
         this.photoPath = photo;
     }
-
-    
-
-    
-
 }

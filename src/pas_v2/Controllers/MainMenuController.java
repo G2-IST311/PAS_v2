@@ -28,7 +28,7 @@ import pas_v2.Models.RoleEnum;
 /**
  * FXML Controller class
  *
- * @author David Ortiz
+ * @author David Ortiz, Drew Hopkins
  */
 public class MainMenuController implements Initializable {
 
@@ -124,8 +124,22 @@ public class MainMenuController implements Initializable {
     
     public void viewPoolButtonClicked(ActionEvent event) throws IOException
     {
-        System.out.println("View Pool Clicked");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/pas_v2/Views/ViewPoolUI.fxml"));
+        Parent tableViewParent = loader.load();
         
+        Scene tableViewScene = new Scene(tableViewParent);
+        
+        //access the controller and call a method
+        ViewPoolController controller = loader.getController();
+        controller.initData(currentEmployee, pool);
+        
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        
+        window.setScene(tableViewScene);
+        window.show();
     }
     
     public void reportsButtonClicked(ActionEvent event) throws IOException

@@ -43,7 +43,7 @@ public class Visit implements Serializable{
         return this.day;
     }
     
-    public long getDuration(){
+    public long getTotalDuration(){
         
         TimeUnit timeUnit= TimeUnit.MINUTES;
         
@@ -51,6 +51,15 @@ public class Visit implements Serializable{
         return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
   
     }
+    
+//TODO:
+//    public long getCurrentDuration(){
+//        TimeUnit timeUnit = timeUnit.MINUTES;
+//        LocalDateTime now = LocalDateTime.now();
+//        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss"); 
+//        formatter.format(now).getTime();
+//        long diffInMillies = checkInTime.getTime() - now.getTime();
+//    }
     
 
     /**

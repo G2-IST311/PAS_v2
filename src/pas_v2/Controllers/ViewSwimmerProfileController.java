@@ -57,6 +57,7 @@ public class ViewSwimmerProfileController implements Initializable {
     private Swimmer selectedSwimmer;
     private Pool pool;
     private String selectedDOB;
+    private String backScene;
 
     private FileChooser fileChooser;
     private File filePathFromUser;
@@ -138,11 +139,12 @@ public class ViewSwimmerProfileController implements Initializable {
         
     }
 
-    public void initData(Employee emp, Swimmer swimmer, Pool pool) {
+    public void initData(Employee emp, Swimmer swimmer, Pool pool, String backScene) {
         this.currentEmployee = emp;
         this.selectedSwimmer = swimmer;
         this.pool = pool;
-
+        this.backScene = backScene;
+        
         visits = selectedSwimmer.getVisits();
         historyTable.getItems().setAll(visits);
 
@@ -247,7 +249,6 @@ public class ViewSwimmerProfileController implements Initializable {
         } catch (IOException e) {
             System.out.println("Could not save file");
         }
-
     }
 
     public void updateSwimmerButtonClicked(ActionEvent event) throws IOException {
@@ -350,7 +351,12 @@ public class ViewSwimmerProfileController implements Initializable {
     }
 
     public void backBtnClicked(ActionEvent event) throws IOException {
-        navigateToFindController(event);
+        if(backScene.equals("FindSwimmer")){
+            navigateToFindController(event);
+        }
+        else if(backScene.equals("ViewPool")){
+            navigateToViewController(event);
+        }
 
     }
 
@@ -371,6 +377,26 @@ public class ViewSwimmerProfileController implements Initializable {
         window.setScene(tableViewScene);
         window.show();
 
+    }
+    
+        public void navigateToViewController(ActionEvent event) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/pas_v2/Views/ViewPoolUI.fxml"));
+        Parent tableViewParent = loader.load();
+        
+        Scene tableViewScene = new Scene(tableViewParent);
+        
+        //access the controller and call a method
+        ViewPoolController controller = loader.getController();
+        controller.initData(currentEmployee, pool);
+        
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        
+        window.setScene(tableViewScene);
+        window.show();
     }
 
 }
