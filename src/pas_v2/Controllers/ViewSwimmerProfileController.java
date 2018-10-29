@@ -57,6 +57,7 @@ public class ViewSwimmerProfileController implements Initializable {
     private Swimmer selectedSwimmer;
     private Pool pool;
     private String selectedDOB;
+    private String backScene;
 
     private FileChooser fileChooser;
     private File filePathFromUser;
@@ -133,25 +134,41 @@ public class ViewSwimmerProfileController implements Initializable {
         
         dateCol.setCellValueFactory(new PropertyValueFactory<Visit, String>("day"));
         checkinCol.setCellValueFactory(new PropertyValueFactory<Visit, String>("checkInTime"));
-        durationCol.setCellValueFactory(new PropertyValueFactory<Visit, String>("duration"));
+        durationCol.setCellValueFactory(new PropertyValueFactory<Visit, String>("totalDuration"));
         checkoutCol.setCellValueFactory(new PropertyValueFactory<Visit, String>("checkOutTime"));
         
     }
 
-    public void initData(Employee emp, Swimmer swimmer, Pool pool) {
+    public void initData(Employee emp, Swimmer swimmer, Pool pool, String backScene) {
         this.currentEmployee = emp;
         this.selectedSwimmer = swimmer;
         this.pool = pool;
-
+        this.backScene = backScene;
+        
         visits = selectedSwimmer.getVisits();
         historyTable.getItems().setAll(visits);
 
         setFields(this.selectedSwimmer);
         toggleEditableFields(currentEmployee.isFunctionPermitted(RoleEnum.EDIT_PROFILE));
+        
+        if(backScene.equals("ViewPool")){
+            this.updateButton.setVisible(false);
+            this.deleteButton.setVisible(false);
+        }
 
     }
+    
+    public void setCheckedStatusLabel(boolean value){
+        if(value){
+            this.statusLabel.setText("Checked in");
+        }else {
+            this.statusLabel.setText("Checked out");
 
-    private void toggleEditableFields(boolean value) {
+        }
+        
+    }
+
+    public void toggleEditableFields(boolean value) {
         firstName.setEditable(value);
         surname.setEditable(value);
         dob.setDisable(!value);
@@ -247,47 +264,56 @@ public class ViewSwimmerProfileController implements Initializable {
         } catch (IOException e) {
             System.out.println("Could not save file");
         }
-
     }
 
     public void updateSwimmerButtonClicked(ActionEvent event) throws IOException {
         if (checkFields()) {
 
-            String photoName;
-            if (photoChanged) {
-                photoName = this.filePathFromUser.getName();
-                saveToFile(ImageIO.read(filePathFromUser));
-            } else {
-                photoName = selectedSwimmer.getPhotoPath();
+            LocalDate today = LocalDate.now(); 
+            if(!(dob.getValue().isAfter(today) || (dob.getValue().isEqual(today)))){
+
+                String photoName;
+                if (photoChanged) {
+                    photoName = this.filePathFromUser.getName();
+                    saveToFile(ImageIO.read(filePathFromUser));
+                } else {
+                    photoName = selectedSwimmer.getPhotoPath();
+                }
+
+                Swimmer updatedSwimmer = new Swimmer(firstName.getText(),
+                        surname.getText(),
+                        (GenderEnum) gender.getValue(),
+                        selectedDOB,
+                        address.getText(),
+                        city.getText(),
+                        zip.getText(),
+                        state.getText(),
+                        phone.getText(),
+                        em_firstname.getText(),
+                        em_surname.getText(),
+                        em_phone.getText(),
+                        skill.getValue().toString(),
+                        status.getValue().toString(),
+                        photoName);
+
+                if (!note.getText().equals("")) {
+                    updatedSwimmer.setNote(note.getText());
+                }
+                if(!selectedSwimmer.getVisits().isEmpty()){
+                    updatedSwimmer.setVisits(selectedSwimmer.getVisits());
+                }
+
+                pool.updateSwimmer(selectedSwimmer, updatedSwimmer);
+
+                messageLbl.setText("");
+
+                pool.writeSwimmerListFile();
+
+                navigateToFindController(event);
             }
-
-            Swimmer updatedSwimmer = new Swimmer(firstName.getText(),
-                    surname.getText(),
-                    (GenderEnum) gender.getValue(),
-                    selectedDOB,
-                    address.getText(),
-                    city.getText(),
-                    zip.getText(),
-                    state.getText(),
-                    phone.getText(),
-                    em_firstname.getText(),
-                    em_surname.getText(),
-                    em_phone.getText(),
-                    skill.getValue().toString(),
-                    status.getValue().toString(),
-                    photoName);
-
-            if (!note.getText().equals("")) {
-                updatedSwimmer.setNote(note.getText());
+            else{
+                messageLbl.setText("You cannot be born in the future.");
             }
-
-            pool.updateSwimmer(selectedSwimmer, updatedSwimmer);
-
-            messageLbl.setText("");
-
-            pool.writeSwimmerListFile();
-
-            navigateToFindController(event);
 
         } else {
             messageLbl.setText("All fields need to be filled out");
@@ -350,7 +376,12 @@ public class ViewSwimmerProfileController implements Initializable {
     }
 
     public void backBtnClicked(ActionEvent event) throws IOException {
-        navigateToFindController(event);
+        if(backScene.equals("FindSwimmer")){
+            navigateToFindController(event);
+        }
+        else if(backScene.equals("ViewPool")){
+            navigateToViewController(event);
+        }
 
     }
 
@@ -371,6 +402,26 @@ public class ViewSwimmerProfileController implements Initializable {
         window.setScene(tableViewScene);
         window.show();
 
+    }
+    
+        public void navigateToViewController(ActionEvent event) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/pas_v2/Views/ViewPoolUI.fxml"));
+        Parent tableViewParent = loader.load();
+        
+        Scene tableViewScene = new Scene(tableViewParent);
+        
+        //access the controller and call a method
+        ViewPoolController controller = loader.getController();
+        controller.initData(currentEmployee, pool);
+        
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        
+        window.setScene(tableViewScene);
+        window.show();
     }
 
 }

@@ -128,7 +128,7 @@ public class FindSwimmerController implements Initializable {
         ViewSwimmerProfileController controller = loader.getController();
         
         try{
-            controller.initData(currentEmployee, (Swimmer)tableView.getSelectionModel().getSelectedItem(), pool);
+            controller.initData(currentEmployee, (Swimmer)tableView.getSelectionModel().getSelectedItem(), pool, "FindSwimmer");
             //This line gets the Stage information
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 
