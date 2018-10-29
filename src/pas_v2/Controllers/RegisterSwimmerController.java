@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.embed.swing.SwingFXUtils;
@@ -143,28 +144,33 @@ public class RegisterSwimmerController implements Initializable {
     public void createSwimmerButtonClicked(ActionEvent event) throws IOException {
         if (checkFields()) {
 
-            //waitLbl.setText("Please wait..");
-            createdSwimmer = new Swimmer(firstName.getText(), surname.getText(), (GenderEnum) gender.getValue(),
-                    selectedDOB, address.getText(), city.getText(), zip.getText(), state.getText(),
-                    phone.getText(), em_firstname.getText(), em_surname.getText(), em_phone.getText(),
-                    skill.getValue().toString(), status.getValue().toString(), this.filePathFromUser.getName());
-            //ToDo replace GenderEnum.MALE with object
+            LocalDate today = LocalDate.now(); 
+            if(!(dob.getValue().isAfter(today) || (dob.getValue().isEqual(today)))){
 
-            if (!note.getText().equals("")) {
-                createdSwimmer.setNote(note.getText());
+                createdSwimmer = new Swimmer(firstName.getText(), surname.getText(), (GenderEnum) gender.getValue(),
+                        selectedDOB, address.getText(), city.getText(), zip.getText(), state.getText(),
+                        phone.getText(), em_firstname.getText(), em_surname.getText(), em_phone.getText(),
+                        skill.getValue().toString(), status.getValue().toString(), this.filePathFromUser.getName());
+
+                if (!note.getText().equals("")) {
+                    createdSwimmer.setNote(note.getText());
+                }
+
+                pool.addSwimmer(createdSwimmer);
+
+                messageLbl.setText("");
+                saveToFile(ImageIO.read(filePathFromUser));
+
+                pool.writeSwimmerListFile();
+
+                navigateToFindSwimmer(event);
             }
+            else {
+                messageLbl.setText("You cannot be born in the future.");
 
-            pool.addSwimmer(createdSwimmer);
-
-            messageLbl.setText("");
-            saveToFile(ImageIO.read(filePathFromUser));
-
-            pool.writeSwimmerListFile();
-
-            navigateToFindSwimmer(event);
-
+            }
         } else {
-            messageLbl.setText("All fields need to be filled out");
+            messageLbl.setText("All fields need to be filled out.");
 
         }
 
