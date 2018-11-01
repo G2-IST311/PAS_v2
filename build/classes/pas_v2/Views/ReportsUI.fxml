@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pas_v2.Controllers.ReportsController">
+    
+    <children>
+        <HBox layoutX="596.0" layoutY="544.0" prefHeight="20.0" prefWidth="881.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="4.0" />
+        <VBox layoutY="1.0" prefHeight="518.0" prefWidth="901.0">
+            <children>
+                <Label prefHeight="61.0" prefWidth="323.0" text="Reports">
+                    <font>
+                        <Font size="36.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="30.0" top="20.0" />
+                    </VBox.margin>
+                </Label>
+                <HBox prefHeight="36.0" prefWidth="242.0">
+                    <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <TableView fx:id="tableView" prefHeight="394.0" prefWidth="881.0">
+                        <columns>
+                            <TableColumn fx:id="nameCol" prefWidth="244.0" text="Swimmer Name" />
+                            <TableColumn fx:id="ageCol" minWidth="0.0" prefWidth="118.0" text="Age" />
+                            <TableColumn fx:id="checkInCol" prefWidth="138.0" text="Check-In" />
+                            <TableColumn fx:id="durationCol" prefWidth="129.0" text="Duration" />
+                            <TableColumn fx:id="genderCol" prefWidth="103.0" text="Gender" />
+                        </columns>
+                        <VBox.margin>
+                            <Insets left="10.0" right="10.0" />
+                        </VBox.margin>
+                    </TableView>
+            </children>
+        </VBox>
+          <Button fx:id="backButton" layoutX="722.0" layoutY="532.0" mnemonicParsing="false" onAction="#navigateToMainMenu" prefHeight="38.0" prefWidth="133.0" text="Back" />
+    </children>
+</AnchorPane>

@@ -170,8 +170,9 @@ public class RegisterSwimmerController implements Initializable {
 
             }
         } else {
-            messageLbl.setText("All fields need to be filled out.");
-
+            if(messageLbl.getText().equals("")){
+                messageLbl.setText("One or more invalid fields.");
+            }
         }
 
     }
@@ -217,8 +218,80 @@ public class RegisterSwimmerController implements Initializable {
                 || em_surname.getText().equals("") || em_phone.getText().equals(""))) {
             check = true;
         }
+        
+        
+        if(isPhoneNumber(phone.getText()) && isPhoneNumber(em_phone.getText())){
+            check = true;
+        } else {
+            check = false;
+        }
+        
+        if(!isValidZipCode(zip.getText())){
+            check = false;
+        } 
+        
+        if(!isPotentiallyAState(state.getText())){
+            check = false;
 
+        }
+        
         return check;
+    }
+    
+    private boolean isPotentiallyAState(String s){
+        if(s.length()==2){
+            return true;
+        } 
+        
+        messageLbl.setText(s+ " cannot be a state."); 
+
+        return false;
+        
+    }
+    
+    private boolean isPhoneNumber(String s) {
+        String pattern = "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}";
+
+        
+        if(s.matches(pattern)){
+            return true;
+        } else {     
+            messageLbl.setText(s+ " is not a phone number"); 
+        }
+
+
+        return false;
+    }
+    
+    private boolean isValidZipCode(String s) {
+        boolean isValidZip = false;
+        
+        if(zip.getText().length() == 5){
+            isValidZip=true;
+        } else{
+            messageLbl.setText("Zip must be 5 digits");
+            isValidZip = false;
+            
+        }
+        
+        boolean isInt = false;
+        try
+        {
+           Integer.parseInt(s);
+
+           isInt = true;
+        }
+        catch (NumberFormatException ex)
+        {
+           
+        }
+        
+        
+        if(!isInt){
+            messageLbl.setText("Zip code must be numeric.");
+            isValidZip = false;
+        }
+        return isValidZip;
     }
 
 }

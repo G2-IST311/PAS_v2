@@ -144,8 +144,22 @@ public class MainMenuController implements Initializable {
     
     public void reportsButtonClicked(ActionEvent event) throws IOException
     {
-        System.out.println("Reports Button Clicked");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/pas_v2/Views/ReportsUI.fxml"));
+        Parent tableViewParent = loader.load();
         
+        Scene tableViewScene = new Scene(tableViewParent);
+        
+        //access the controller and call a method
+        ReportsController controller = loader.getController();
+        controller.initData(currentEmployee, pool);
+        
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        
+        window.setScene(tableViewScene);
+        window.show();        
     }
     
    
