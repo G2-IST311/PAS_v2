@@ -23,13 +23,17 @@ public class Swimmer implements Serializable{
     private String checkedStatus = "Checked out";
     private Date CheckedInDate;
     private Date CheckedOutDate;
+    private LocalDate registrationDate;
+    private String id;
     
     private ArrayList<Visit> visits;
 
     private Visit currentVisit;
 
     
-    public Swimmer(String name, String lastname, GenderEnum sex, String dob, String address, String city, String zip, String state, String phone, String em_firstname, String em_lastname, String em_phone, String skill, String status, String image) {
+    public Swimmer(String name, String lastname, GenderEnum sex, String dob, String address,
+            String city, String zip, String state, String phone, String em_firstname,
+            String em_lastname, String em_phone, String skill, String status, String image) {
         visits = new ArrayList<>();
         
         this.name = name;
@@ -47,11 +51,14 @@ public class Swimmer implements Serializable{
         this.skill = skill;
         this.status = status;
         this.photoPath = image;
+        this.registrationDate = LocalDate.now();
+        
+        
         
         this.fullName = name +" "+ lastname;
         this.fullAddress = address+" "+city+" "+state+" "+zip+"";
-        
-        
+        String seed = "cvlnweofvzfqrfksdfvawehrih"; //pseudo-random string
+        this.id = Integer.toHexString(Math.abs((this.fullName + this.fullAddress + seed).hashCode()));
         
     }
 

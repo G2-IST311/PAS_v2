@@ -31,26 +31,23 @@ public class Pool {
     private ArrayList<Visit> visits;
     private Gson gson;
     private Type listType;
-
-    //serializeable files
-    private String listOfSwimmersFileName = "swimmers";
+    private Storage storage;
 
     public Pool() {
-        swimmers = new ArrayList<>();
+        swimmers = new ArrayList<Swimmer>();
         visits = new ArrayList<>();
         report = new Report(this);
         activeSwimmers = new ArrayList<>();
-        activePool = new ArrayList<>();        
+        activePool = new ArrayList<>();
         gson = new Gson();
-        listType = new TypeToken<ArrayList<Swimmer>>() {}.getType();
-        
+        listType = new TypeToken<ArrayList<Swimmer>>() {
+        }.getType();
+
+        storage = new Storage();
         this.readSwimmerListFile();
-
         if (swimmers.isEmpty() || swimmers == null) {
-
             this.writeSwimmerListFile();
             this.readSwimmerListFile();
-
         }
 
         //printSwimmerList();
@@ -117,25 +114,12 @@ public class Pool {
         return tempList;
     }
 
-    public void readSwimmerListFile() {      
-        try (Scanner input = new Scanner(new File(listOfSwimmersFileName + ".json"))){           
-            String stringJSON = input.useDelimiter("\\A").next();
-            swimmers = gson.fromJson(stringJSON, listType); 
-        } catch (FileNotFoundException ex) {
-            System.out.println(listOfSwimmersFileName + ".json not found, creating.");
-        }       
+    public void readSwimmerListFile() {
+        swimmers = storage.read(Swimmer.class);
     }
 
-    public void writeSwimmerListFile() {        
-        String stringJSON = gson.toJson(swimmers, listType);
-        try (PrintWriter output = new PrintWriter(listOfSwimmersFileName + ".json")) {
-            output.println(stringJSON);
-            output.close();
-
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
-
+    public void writeSwimmerListFile() {
+        storage.write(swimmers, Swimmer.class);
     }
 
     public void printSwimmerList() {
