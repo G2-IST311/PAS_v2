@@ -59,11 +59,11 @@ public class Storage {
             listType = new TypeToken<ArrayList<Swimmer>>() {
             }.getType();
             fileName = "swimmers.json";
-        } else if (cls == Swimmer.class) {
+        } else if (cls == Employee.class) {
             listType = new TypeToken<ArrayList<Employee>>() {
             }.getType();
             fileName = "employees.json";
-        } else if (cls == Swimmer.class) {
+        } else if (cls == Visit.class) {
             listType = new TypeToken<ArrayList<Visit>>() {
             }.getType();
             fileName = "visits.json";

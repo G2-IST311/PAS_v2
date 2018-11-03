@@ -6,14 +6,9 @@ package pas_v2.Models;
  */
 public class Admin extends Employee {
  
-    public Admin(String newFirstName, String newLastName) {
-        super(newFirstName, newLastName);
+    public Admin(String newFirstName, String newLastName, EmployeeRoleEnum role) {
+        super(newFirstName, newLastName, role);
 
-        roles.add(RoleEnum.LOOKUP);
-        roles.add(RoleEnum.CREATE_PROFILE);
-        roles.add(RoleEnum.CREATE_EMPLOYEE);
-        roles.add(RoleEnum.EDIT_PROFILE);
-        roles.add(RoleEnum.VIEW_REPORTS);
 
     }
 

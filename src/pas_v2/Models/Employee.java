@@ -4,41 +4,60 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 
+ *
  * @author d.mikhaylov
  */
-abstract public class Employee implements Person {
+public class Employee implements Person {
 
     private String firstName;
     private String lastName;
-    protected Set<RoleEnum> roles;
+    private EmployeeRoleEnum role;
     private Credential credential;
-    
-    public Employee(String newFirstName, String newLastName){
+
+    public Employee(String newFirstName, String newLastName, EmployeeRoleEnum role) {
         this.firstName = newFirstName;
         this.lastName = newLastName;
-        roles = new HashSet<>();
-        
-    }
-    
-    
-    abstract public String getFullName();
-    abstract public boolean authenticate(String empID, String password);
+        this.role = role;
 
-        
-    public void setCredential(String _newPassword){
+    }
+
+    public String getFullName() {
+        return getFirstName() + " " + getLastName() + ", " + role.getValue();
+    }
+
+    public boolean authenticate(String empID, String password){
+        return getCredential().verifyLogin(empID, password);
+    }
+
+    public void setCredential(String _newPassword) {
         credential = new Credential(this.firstName, this.lastName, _newPassword);
     }
-    
-    public Boolean isFunctionPermitted(RoleEnum function){
-        return roles.contains(function);
+
+    public Boolean isFunctionPermitted(RoleEnum function) {
+        switch (function) {
+            case LOOKUP:
+                return true;
+            case CHECKIN:
+                return role == EmployeeRoleEnum.Operator;
+            case CHECKOUT:
+                return role == EmployeeRoleEnum.Operator;
+            case VIEW_REPORTS:
+                return true;
+            case CREATE_EMPLOYEE:
+                return role == EmployeeRoleEnum.Admin;
+            case CREATE_PROFILE:
+                return role == EmployeeRoleEnum.Admin;
+            case EDIT_PROFILE:
+                return role == EmployeeRoleEnum.Admin;
+        }
+        return false;
     }
-    
- 
-    /**
-     * @return the firstName
-     */
-    public String getFirstName() {
+
+
+/**
+ * @return the firstName
+ */
+public String getFirstName() {
         return firstName;
     }
   

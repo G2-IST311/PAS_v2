@@ -27,6 +27,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import pas_v2.Models.Employee;
 import pas_v2.Models.EmployeeList;
+import pas_v2.Models.EmployeeRoleEnum;
+import pas_v2.Models.Storage;
 
 /**
  * FXML Controller class
@@ -35,125 +37,127 @@ import pas_v2.Models.EmployeeList;
  */
 public class NewEmployeeController implements Initializable {
 
-    @FXML Label MsgLabel;
+    @FXML
+    Label MsgLabel;
     //private javax.swing.JList<String> RoleList;
-    @FXML Button cnclBtn;
-    @FXML PasswordField empPWField;
-    @FXML TextField fNameTxtField;
-   
-    @FXML TextField lNameTxtField;
-    @FXML Button submitBtn;
-    
-    @FXML ToggleGroup role;
-    
-    
+    @FXML
+    Button cnclBtn;
+    @FXML
+    PasswordField empPWField;
+    @FXML
+    TextField fNameTxtField;
+
+    @FXML
+    TextField lNameTxtField;
+    @FXML
+    Button submitBtn;
+
+    @FXML
+    ToggleGroup roleGroup;
+
     private EmployeeList employeeList;
     private Employee currentEmployee;
-    
-    public void initData(Employee emp, EmployeeList employeeList){
+    private Storage storage;
+    private EmployeeRoleEnum role;
+
+    public void initData(Employee emp, EmployeeList employeeList) {
         this.employeeList = employeeList;
         this.currentEmployee = emp;
-        
+
     }
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try { 
-            employeeList = new EmployeeList();
-            employeeList.refreshEmployeeList();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(NewEmployeeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    } 
-    
-    
-    public void submitButtonClicked(ActionEvent ae) throws IOException{ 
+
+        storage = new Storage();
+//        try { 
+//            employeeList = new EmployeeList();
+//            employeeList.refreshEmployeeList();
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(NewEmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }
+
+    public void submitButtonClicked(ActionEvent ae) throws IOException {
         System.out.println("submit clicked");
 
-          
-        if(checkFields())
-        {    
-           MsgLabel.setText("One or more fields are not completed");     
-        }
-        else
-        {
-           if (containsForbiddenCharacters())
-            {
+        if (checkFields()) {
+            MsgLabel.setText("One or more fields are not completed");
+        } else {
+            if (containsForbiddenCharacters()) {
                 MsgLabel.setText(" the characters ~ and ; cannot be contained in any field");
                 resetFields();
-            }
-
-            else                
-            {    
-                RadioButton selectedRadioButton = (RadioButton) role.getSelectedToggle();
+            } else {
+                RadioButton selectedRadioButton = (RadioButton) roleGroup.getSelectedToggle();
                 String toogleGroupValue = selectedRadioButton.getText();
+
+                if (toogleGroupValue.equalsIgnoreCase("admin")) {
+                    role = EmployeeRoleEnum.Admin;
+                } else {
+                    role = EmployeeRoleEnum.Operator;
+                }
 
                 MsgLabel.setText("Submitted Successfully");
 
-                employeeList.saveEmployee(toogleGroupValue.toLowerCase(), fNameTxtField.getText(), lNameTxtField.getText(), empPWField.getText());
+                Employee newEmployee = new Employee(fNameTxtField.getText(), 
+                        lNameTxtField.getText(), role);
+                employeeList.addEmployee(newEmployee);
+                storage.write(employeeList.getEmployees(), Employee.class);
+                //employeeList.saveEmployee(toogleGroupValue.toLowerCase(), fNameTxtField.getText(), lNameTxtField.getText(), empPWField.getText());
 
-                
                 navigateToStaffUI(ae);
-                
-            }     
-        }    
-       
+
+            }
+        }
+
     }
-    
-    public void navigateToStaffUI(ActionEvent event) throws IOException
-    {
+
+    public void navigateToStaffUI(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/pas_v2/Views/StaffUI.fxml"));
         Parent tableViewParent = loader.load();
-        
+
         Scene tableViewScene = new Scene(tableViewParent);
-        
+
         //access the controller and call a method
         StaffUIController controller = loader.getController();
         controller.initData(currentEmployee, employeeList);
-        
+
         //This line gets the Stage information
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
         window.setScene(tableViewScene);
         window.show();
-        
+
     }
-    
-    public void resetFields()
-    {
+
+    public void resetFields() {
         fNameTxtField.setText("");
         lNameTxtField.setText("");
         empPWField.setText("");
-        
 
-    }  
-    
-    public boolean containsForbiddenCharacters()
-    {
-        boolean badchar; 
+    }
+
+    public boolean containsForbiddenCharacters() {
+        boolean badchar;
         badchar = fNameTxtField.getText().contains(";") || lNameTxtField.getText().contains(";") || empPWField.getText().contains(";") || fNameTxtField.getText().contains("~") || lNameTxtField.getText().contains("~") || empPWField.getText().contains("~");
 
         return badchar;
-    } 
-    
-    private boolean checkFields()
-    {
-        boolean anyFieldEmpty; 
+    }
 
-        String pass = new String (empPWField.getText());
-        if (fNameTxtField.getText().equals("") || lNameTxtField.getText().equals("") || pass.equals(""))
-        {
+    private boolean checkFields() {
+        boolean anyFieldEmpty;
+
+        String pass = new String(empPWField.getText());
+        if (fNameTxtField.getText().equals("") || lNameTxtField.getText().equals("") || pass.equals("")) {
             anyFieldEmpty = true;
-        }    
-        else
-        {
-            anyFieldEmpty = false; 
+        } else {
+            anyFieldEmpty = false;
         }
         return anyFieldEmpty;
-    } 
-    
+    }
+
 }

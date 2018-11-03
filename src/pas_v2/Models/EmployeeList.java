@@ -15,10 +15,12 @@ public class EmployeeList {
     
     private ArrayList<Employee> employees;
 
-    public EmployeeList() throws FileNotFoundException{
-        
+    public EmployeeList() throws FileNotFoundException{        
         employees = fetchEmployeesFromFile();
-
+    }
+    
+    public EmployeeList(ArrayList<Employee> list){
+        employees = list;
     }
     
     public EmployeeList getEmployeeList(){
@@ -99,9 +101,9 @@ public class EmployeeList {
                         String lname = words[1];
                         String pass = words[2];
                         
-                        Admin newA = new Admin(fname, lname);
-                        newA.setCredential(pass);
-                        tempEmployees.add(newA);
+                        Employee employee = new Employee(fname, lname, EmployeeRoleEnum.Admin);
+                        employee.setCredential(pass);
+                        tempEmployees.add(employee);
                         
                     } else if(type[0].equals("operator")){
                         
@@ -110,9 +112,9 @@ public class EmployeeList {
                         String lname = words[1];
                         String pass = words[2];
                         
-                        Operator newO = new Operator(fname, lname);
-                        newO.setCredential(pass);
-                        tempEmployees.add(newO);
+                        Employee employee = new Employee(fname, lname, EmployeeRoleEnum.Operator);
+                        employee.setCredential(pass);
+                        tempEmployees.add(employee);
                         
                     } else {
                         

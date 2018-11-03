@@ -43,12 +43,12 @@ public class StaffUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        try {
-            employeeList = new EmployeeList();
-            employeeList.refreshEmployeeList();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(StaffUIController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            employeeList = new EmployeeList();
+//            employeeList.refreshEmployeeList();
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(StaffUIController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }  
     
     public void initData(Employee emp, EmployeeList employeeList){

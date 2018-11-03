@@ -9,6 +9,7 @@ package pas_v2.Controllers;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +20,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import pas_v2.Models.Employee;
 import pas_v2.Models.EmployeeList;
+import pas_v2.Models.Storage;
 
 /**
  * FXML Controller class
@@ -35,9 +37,9 @@ public class LoginUIController implements Initializable {
     
     private String empID;
     private String password;
-    private EmployeeList employeeList;
-    
+    private EmployeeList employeeList;  
     private Employee currentEmployee;
+    private Storage storage;
     
     
     /**
@@ -46,11 +48,16 @@ public class LoginUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        try {
-            employeeList = new EmployeeList();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(LoginUIController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        storage = new Storage();
+        employeeList = new EmployeeList(storage.read(Employee.class));
+        
+//        try {
+//            employeeList = new EmployeeList();
+//            System.out.println(employeeList.getEmployees().size());
+//            storage.write(employeeList.getEmployees(), Employee.class);
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(LoginUIController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
        
         statusLabel.setText("");
 

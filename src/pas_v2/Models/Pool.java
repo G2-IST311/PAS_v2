@@ -29,8 +29,6 @@ public class Pool {
     ArrayList<Swimmer> activeSwimmers;
     ArrayList<ActiveSwimmerData> activePool;
     private ArrayList<Visit> visits;
-    private Gson gson;
-    private Type listType;
     private Storage storage;
 
     public Pool() {
@@ -39,10 +37,6 @@ public class Pool {
         report = new Report(this);
         activeSwimmers = new ArrayList<>();
         activePool = new ArrayList<>();
-        gson = new Gson();
-        listType = new TypeToken<ArrayList<Swimmer>>() {
-        }.getType();
-
         storage = new Storage();
         this.readSwimmerListFile();
         if (swimmers.isEmpty() || swimmers == null) {
