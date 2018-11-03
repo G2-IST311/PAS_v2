@@ -34,6 +34,7 @@ public class Employee implements Person {
     }
 
     public Boolean isFunctionPermitted(RoleEnum function) {
+        //System.out.println(function.getValue());
         switch (function) {
             case LOOKUP:
                 return true;

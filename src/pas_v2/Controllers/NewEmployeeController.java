@@ -28,7 +28,9 @@ import javafx.stage.Stage;
 import pas_v2.Models.Employee;
 import pas_v2.Models.EmployeeList;
 import pas_v2.Models.EmployeeRoleEnum;
+import pas_v2.Models.FieldTypeEnum;
 import pas_v2.Models.Storage;
+import pas_v2.Models.Validator;
 
 /**
  * FXML Controller class
@@ -53,7 +55,12 @@ public class NewEmployeeController implements Initializable {
     Button submitBtn;
 
     @FXML
-    ToggleGroup roleGroup;
+    ToggleGroup roleSelector;
+
+    @FXML
+    RadioButton rbAdmin;
+    @FXML
+    RadioButton rbOperator;
 
     private EmployeeList employeeList;
     private Employee currentEmployee;
@@ -72,7 +79,11 @@ public class NewEmployeeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        //validation rules
+        fNameTxtField.textProperty().addListener(new Validator(fNameTxtField, FieldTypeEnum.NAME));
+        lNameTxtField.textProperty().addListener(new Validator(lNameTxtField, FieldTypeEnum.NAME));
         storage = new Storage();
+
 //        try { 
 //            employeeList = new EmployeeList();
 //            employeeList.refreshEmployeeList();
@@ -82,7 +93,7 @@ public class NewEmployeeController implements Initializable {
     }
 
     public void submitButtonClicked(ActionEvent ae) throws IOException {
-        System.out.println("submit clicked");
+        //System.out.println("submit clicked");
 
         if (checkFields()) {
             MsgLabel.setText("One or more fields are not completed");
@@ -91,25 +102,17 @@ public class NewEmployeeController implements Initializable {
                 MsgLabel.setText(" the characters ~ and ; cannot be contained in any field");
                 resetFields();
             } else {
-                RadioButton selectedRadioButton = (RadioButton) roleGroup.getSelectedToggle();
-                String toogleGroupValue = selectedRadioButton.getText();
-
-                if (toogleGroupValue.equalsIgnoreCase("admin")) {
-                    role = EmployeeRoleEnum.Admin;
-                } else {
-                    role = EmployeeRoleEnum.Operator;
-                }
-
-                MsgLabel.setText("Submitted Successfully");
-
+                
+                role = (rbAdmin.isSelected())?  EmployeeRoleEnum.Admin : EmployeeRoleEnum.Operator;
                 Employee newEmployee = new Employee(fNameTxtField.getText(), 
                         lNameTxtField.getText(), role);
+                newEmployee.setCredential(empPWField.getText());
                 employeeList.addEmployee(newEmployee);
+                
                 storage.write(employeeList.getEmployees(), Employee.class);
                 //employeeList.saveEmployee(toogleGroupValue.toLowerCase(), fNameTxtField.getText(), lNameTxtField.getText(), empPWField.getText());
-
+                MsgLabel.setText("New Employee saved Successfully");
                 navigateToStaffUI(ae);
-
             }
         }
 
