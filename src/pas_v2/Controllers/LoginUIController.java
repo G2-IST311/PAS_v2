@@ -46,13 +46,8 @@ public class LoginUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        
-        try {
-            employeeList = new EmployeeList();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(LoginUIController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
+        employeeList = new EmployeeList();
+  
         statusLabel.setText("");
 
     }  
