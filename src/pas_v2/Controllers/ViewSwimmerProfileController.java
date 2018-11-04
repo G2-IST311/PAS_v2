@@ -45,6 +45,8 @@ import pas_v2.Models.Pool;
 import pas_v2.Models.RoleEnum;
 import pas_v2.Models.Swimmer;
 import pas_v2.Models.Visit;
+import pas_v2.Models.Validator;
+import pas_v2.Models.FieldTypeEnum;
 
 /**
  * FXML Controller class
@@ -136,6 +138,18 @@ public class ViewSwimmerProfileController implements Initializable {
         checkinCol.setCellValueFactory(new PropertyValueFactory<Visit, String>("checkInTime"));
         durationCol.setCellValueFactory(new PropertyValueFactory<Visit, String>("totalDuration"));
         checkoutCol.setCellValueFactory(new PropertyValueFactory<Visit, String>("checkOutTime"));
+        
+        //validation rules
+        firstName.textProperty().addListener(new Validator(firstName, FieldTypeEnum.NAME));
+        surname.textProperty().addListener(new Validator(surname, FieldTypeEnum.NAME));
+        address.textProperty().addListener(new Validator(address, FieldTypeEnum.ADDRESS));
+        city.textProperty().addListener(new Validator(city, FieldTypeEnum.NAME));
+        zip.textProperty().addListener(new Validator(zip, FieldTypeEnum.ZIP));
+        state.textProperty().addListener(new Validator(state, FieldTypeEnum.STATE));
+        phone.textProperty().addListener(new Validator(phone, FieldTypeEnum.PHONE));
+        em_firstname.textProperty().addListener(new Validator(em_firstname, FieldTypeEnum.NAME));
+        em_surname.textProperty().addListener(new Validator(em_surname, FieldTypeEnum.NAME));
+        em_phone.textProperty().addListener(new Validator(em_phone, FieldTypeEnum.PHONE));
         
     }
 

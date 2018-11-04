@@ -22,22 +22,27 @@
                <font>
                   <Font size="9.0" />
                </font></PasswordField>
-            <RadioButton layoutX="166.0" layoutY="305.0" mnemonicParsing="false" text="Admin">
+            <RadioButton fx:id="rbAdmin" layoutX="166.0" layoutY="305.0" mnemonicParsing="false" text="Admin">
                <toggleGroup>
-                  <ToggleGroup fx:id="role" />
+                  <ToggleGroup fx:id="roleSelector" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton layoutX="167.0" layoutY="276.0" mnemonicParsing="false" selected="true" text="Operator" toggleGroup="$role" />
-            <Label fx:id="MsgLabel" alignment="CENTER" layoutX="4.0" layoutY="354.0" prefHeight="17.0" prefWidth="393.0" textFill="#dd0707" />
+            <RadioButton fx:id="rbOperator" layoutX="167.0" layoutY="276.0" mnemonicParsing="false" 
+                         selected="true" text="Operator" toggleGroup="$role" />
+            <Label fx:id="MsgLabel" alignment="CENTER" layoutX="4.0" layoutY="354.0" 
+                   prefHeight="17.0" prefWidth="393.0" textFill="#dd0707" />
             
          </children>
       </Pane>
-      <Label fx:id="titleLabel" alignment="CENTER" layoutX="189.0" layoutY="36.0" text="New Employee" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label fx:id="titleLabel" alignment="CENTER" layoutX="189.0" layoutY="36.0" 
+             text="New Employee" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font size="39.0" />
          </font>
       </Label>
-      <Button fx:id="cnclBtn" layoutX="740.0" layoutY="477.0" mnemonicParsing="false" onAction="#navigateToStaffUI" prefHeight="36.0" prefWidth="105.0" text="Cancel" />
-      <Button fx:id="submitBtn" layoutX="740.0" layoutY="528.0" mnemonicParsing="false" onAction="#submitButtonClicked" prefHeight="36.0" prefWidth="105.0" text="Save" />
+      <Button fx:id="cnclBtn" layoutX="740.0" layoutY="477.0" mnemonicParsing="false"
+              onAction="#navigateToStaffUI" prefHeight="36.0" prefWidth="105.0" text="Cancel" />
+      <Button fx:id="submitBtn" layoutX="740.0" layoutY="528.0" mnemonicParsing="false" 
+              onAction="#submitButtonClicked" prefHeight="36.0" prefWidth="105.0" text="Save" />
    </children>
 </AnchorPane>

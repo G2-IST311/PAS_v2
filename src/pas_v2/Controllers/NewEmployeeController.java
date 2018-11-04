@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pas_v2.Controllers;
 
 import java.io.FileNotFoundException;
@@ -27,6 +22,10 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import pas_v2.Models.Employee;
 import pas_v2.Models.EmployeeList;
+import pas_v2.Models.EmployeeRoleEnum;
+import pas_v2.Models.FieldTypeEnum;
+import pas_v2.Models.Storage;
+import pas_v2.Models.Validator;
 
 /**
  * FXML Controller class
@@ -44,11 +43,19 @@ public class NewEmployeeController implements Initializable {
     @FXML TextField lNameTxtField;
     @FXML Button submitBtn;
     
-    @FXML ToggleGroup role;
+    @FXML
+    ToggleGroup roleSelector;
+
+    @FXML
+    RadioButton rbAdmin;
+    @FXML
+    RadioButton rbOperator;
     
     
     private EmployeeList employeeList;
     private Employee currentEmployee;
+    private Storage storage;
+    private EmployeeRoleEnum role;
     
     public void initData(Employee emp, EmployeeList employeeList){
         this.employeeList = employeeList;
@@ -61,17 +68,24 @@ public class NewEmployeeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try { 
-            employeeList = new EmployeeList();
-            employeeList.refreshEmployeeList();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(NewEmployeeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        //validation rules
+        fNameTxtField.textProperty().addListener(new Validator(fNameTxtField, FieldTypeEnum.NAME));
+        lNameTxtField.textProperty().addListener(new Validator(lNameTxtField, FieldTypeEnum.NAME));
+        
+        storage = new Storage();
+        
+//        try { 
+//            employeeList = new EmployeeList();
+//            employeeList.refreshEmployeeList();
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(NewEmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     } 
     
     
     public void submitButtonClicked(ActionEvent ae) throws IOException{ 
-        System.out.println("submit clicked");
+        //System.out.println("submit clicked");
 
           
         if(checkFields())
@@ -88,15 +102,20 @@ public class NewEmployeeController implements Initializable {
 
             else                
             {    
-                RadioButton selectedRadioButton = (RadioButton) role.getSelectedToggle();
-                String toogleGroupValue = selectedRadioButton.getText();
-
-                MsgLabel.setText("Submitted Successfully");
-
-                employeeList.saveEmployee(toogleGroupValue.toLowerCase(), fNameTxtField.getText(), lNameTxtField.getText(), empPWField.getText());
-
-                
+                role = (rbAdmin.isSelected())?  EmployeeRoleEnum.Admin : EmployeeRoleEnum.Operator;
+                Employee newEmployee = new Employee(fNameTxtField.getText(), 
+                        lNameTxtField.getText(), role);
+                newEmployee.setCredential(empPWField.getText());
+                employeeList.addEmployee(newEmployee);
+                storage.write(employeeList.getEmployees(), Employee.class);
+                MsgLabel.setText("New Employee saved Successfully");
                 navigateToStaffUI(ae);
+                
+                
+                //RadioButton selectedRadioButton = (RadioButton) role.getSelectedToggle();
+                //String toogleGroupValue = selectedRadioButton.getText();
+                //MsgLabel.setText("Submitted Successfully");
+                //employeeList.saveEmployee(toogleGroupValue.toLowerCase(), fNameTxtField.getText(), lNameTxtField.getText(), empPWField.getText());            
                 
             }     
         }    
