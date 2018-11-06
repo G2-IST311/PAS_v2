@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -30,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import pas_v2.Models.Report_Visits;
 import pas_v2.Models.Swimmer;
 import pas_v2.Models.Visit;
 
@@ -273,20 +275,26 @@ public class ReportsController implements Initializable {
                 break;
             case "View Visits":
                 
-                //TODO: fill these columns with pool.getViewReportsSwimmers(from, to) arraylist
-                swimmerCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("fullName"));
-                operatorCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("gender"));
-                dateCol.setCellValueFactory(new PropertyValueFactory<Visit, String>("day"));
-                checkinCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("fullAddress"));
-                durationCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("skill"));
-                checkoutCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("status"));
-                typeCol.setCellValueFactory(new PropertyValueFactory<Swimmer, String>("checkedStatus"));
+                swimmerCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("fullName"));
+                operatorCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("operator"));
+                dateCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("date"));
+                checkinCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("checkin"));
+                durationCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("duration"));
+                checkoutCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("checkout"));
+                typeCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("type"));
 
-        
-                tableView.getItems().setAll(pool.getViewReportsSwimmers(from, to));
+                ArrayList<Report_Visits> reportVisits = new ArrayList<>();
+
+                for(Swimmer s : pool.getViewReportsSwimmers(from, to)){
+                    Report_Visits tempVisit = new Report_Visits(s, this.currentEmployee.getLastName());
+                    reportVisits.add(tempVisit);
+                }
+                
+                tableView.getItems().setAll(reportVisits);
                 
                 visitsReportSelected();
                 break;
+                
             default:
                 System.out.println("Selection error");
                 break;
@@ -309,7 +317,6 @@ public class ReportsController implements Initializable {
             toDate = "";
 
         }
-        
         
         
         if(!(fromDate.equals("") || toDate.equals("") || reportDropdown.getSelectionModel().isEmpty())){
