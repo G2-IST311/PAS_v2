@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pas_v2.Models.Employee;
 import pas_v2.Models.EmployeeList;
@@ -171,13 +172,31 @@ public class MainMenuController implements Initializable {
     
     public void logoutBtnClicked(ActionEvent event) throws IOException
     {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/pas_v2/Views/LoginUI.fxml"));
-        Scene tableViewScene = new Scene(tableViewParent);
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/pas_v2/Views/LogoutPopup.fxml"));
+        Parent tableViewParent = loader.load();
         
-        Stage logoutWindow = (Stage) menuBar.getScene().getWindow();
+        Scene scene = new Scene(tableViewParent);
+        
+        //access the controller and call a method
+        LogoutPopupController controller = loader.getController();
+        
+        //This line gets the Stage information
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.initOwner((Stage)((Node)event.getSource()).getScene().getWindow());
+        window.setScene(scene);
+        window.showAndWait();
+        
+        //occurs when the user selects the confirm button in the pop-up
+        if (controller.getDecision().equals("yes")){
+            tableViewParent = FXMLLoader.load(getClass().getResource("/pas_v2/Views/LoginUI.fxml"));
+            Scene tableViewScene = new Scene(tableViewParent);
 
-        logoutWindow.setScene(tableViewScene);
-        logoutWindow.show();
+            Stage logoutWindow = (Stage) menuBar.getScene().getWindow();
+
+            logoutWindow.setScene(tableViewScene);
+            logoutWindow.show();
+        }
     }
-    
 }

@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pas_v2.Models.Employee;
 import pas_v2.Models.EmployeeList;
@@ -23,7 +24,7 @@ import pas_v2.Models.EmployeeList;
 /**
  * FXML Controller class
  *
- * @author David Ortiz
+ * @author David Ortiz, Drew Hopkins
  */
 public class LoginUIController implements Initializable {
 
@@ -47,12 +48,9 @@ public class LoginUIController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         employeeList = new EmployeeList();
-  
         statusLabel.setText("");
 
-    }  
-    
-    
+    }
     
     public void LoginBtnClicked(ActionEvent event) throws IOException {
 
@@ -87,8 +85,6 @@ public class LoginUIController implements Initializable {
                 statusLabel.setText("Login failed, user does not exist."); 
             }
         }
-
-        
     }
     
     
@@ -112,11 +108,24 @@ public class LoginUIController implements Initializable {
         
     }
     
-    public void quitBtnClicked(){
-        System.exit(0);
-
+    public void quitBtnClicked(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/pas_v2/Views/QuitPopup.fxml"));
+        Parent tableViewParent = loader.load();
+        
+        Scene scene = new Scene(tableViewParent);
+        
+        //access the controller and call a method
+        QuitPopupController controller = loader.getController();
+        
+        //This line gets the Stage information
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.initOwner((Stage)((Node)event.getSource()).getScene().getWindow());
+        window.setScene(scene);
+        window.showAndWait();
     }
-    
+        
     private void resetScreen(){
         statusLabel.setText("");
         empIdField.setText("");
