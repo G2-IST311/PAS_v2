@@ -5,6 +5,9 @@ package pas_v2.Models;
 //import java.io.IOException;
 //import java.io.ObjectInputStream;
 //import java.io.ObjectOutputStream;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import pas_v2.Models.Reports.Report;
 
@@ -17,15 +20,12 @@ public class Pool {
 
     private Report report;
     private ArrayList<Swimmer> swimmers;
-    ArrayList<Swimmer> activeSwimmers;
-    ArrayList<ActiveSwimmerData> activePool;
+    private ArrayList<Swimmer> activeSwimmers;
+    private ArrayList<ActiveSwimmerData> activePool;
     private ArrayList<Visit> visits;
     private Storage storage;
     
-    //serializeable files
-    //private String listOfSwimmersFileName = "swimmers.ser";
-    
-
+   
 
     public Pool() {
         swimmers = new ArrayList<>();
@@ -35,18 +35,41 @@ public class Pool {
         activePool = new ArrayList<>();
         storage = new Storage();
         
-                this.readSwimmerListFile();
+        this.readSwimmerListFile();
 
-                if(swimmers.isEmpty() || swimmers == null){
+        if(swimmers.isEmpty() || swimmers == null){
 
-                    this.writeSwimmerListFile();
-                    this.readSwimmerListFile();
+            this.writeSwimmerListFile();
+            this.readSwimmerListFile();
 
-                }
+        }
         
-        //printSwimmerList();
     }
-    //selectedSwimmer, updatedSwimmer
+    
+    public ArrayList<Swimmer> getViewReportsSwimmers(LocalDate from, LocalDate to){
+        ArrayList<Swimmer> tempSwimmers = new ArrayList<>();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        for(Swimmer s : swimmers){
+            
+            try{
+                LocalDate swimmerCheckin = s.getCurrentVisit().getCheckinDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate swimmerCheckout = s.getCurrentVisit().getCheckoutDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+             
+                if((swimmerCheckin.isAfter(from) || swimmerCheckin.isEqual(from)) && (swimmerCheckout.isBefore(to)) || swimmerCheckout.isEqual(to)){
+                    tempSwimmers.add(s);
+                }
+                
+            } catch (NullPointerException e){
+                
+            }
+
+        }
+        
+        return tempSwimmers;
+        
+    }
     
     public void constructActivePool(ArrayList<Swimmer> activeSwimmers){
         activePool.clear();
@@ -112,38 +135,12 @@ public class Pool {
     
     public void readSwimmerListFile(){
         swimmers = storage.read(Swimmer.class);
-//        FileInputStream fis = null;
-//        ObjectInputStream in = null;
-//        try {
-//            fis = new FileInputStream(listOfSwimmersFileName);
-//            in = new ObjectInputStream(fis);
-//            swimmers = (ArrayList)in.readObject();
-//            in.close();
-////            if(!swimmers.isEmpty()){
-////                System.out.println("There are swimmers in the swimmer list");
-////            }
-//        }
-//        catch(IOException ex){
-//            System.out.println(listOfSwimmersFileName + " not found, creating.");
-//        }
-//        catch(ClassNotFoundException ex){
-//            ex.printStackTrace();
-//        }
+
     }
     
     public void writeSwimmerListFile(){
         storage.write(swimmers, Swimmer.class);
-//        FileOutputStream fos = null;
-//        ObjectOutputStream out = null;
-//        try {
-//            fos = new FileOutputStream(listOfSwimmersFileName);
-//            out = new ObjectOutputStream(fos);
-//            out.writeObject(swimmers);
-//            out.close();
-//        }
-//        catch(IOException ex){
-//            ex.printStackTrace();
-//        }
+
     }
     
     public void printSwimmerList(){

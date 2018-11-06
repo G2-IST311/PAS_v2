@@ -7,6 +7,9 @@ package pas_v2.Controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -24,7 +27,13 @@ import javafx.stage.Stage;
 import pas_v2.Models.Employee;
 import pas_v2.Models.Pool;
 import javafx.beans.value.ChangeListener;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import pas_v2.Models.Report_Visits;
+import pas_v2.Models.Swimmer;
+import pas_v2.Models.Visit;
 
 
 /**
@@ -47,44 +56,47 @@ public class ReportsController implements Initializable {
     @FXML
     private HBox statisticSection;
     
-    @FXML
-    TableColumn swimmerCol;
-    @FXML
-    TableColumn operatorCol;
-    @FXML
-    TableColumn dateCol;
-    @FXML
-    TableColumn checkinCol;
-    @FXML
-    TableColumn durationCol;
-    @FXML
-    TableColumn checkoutCol;
-    @FXML
-    TableColumn typeCol;
-    @FXML
-    TableColumn numberVisitsCol;
-    @FXML
-    TableColumn averageTimeCol;
-    @FXML
-    TableColumn totalTimeCol;
-    @FXML
-    TableColumn timeDayCol;
-    @FXML
-    TableColumn mondayCol;
-    @FXML
-    TableColumn tuesdayCol;
-    @FXML
-    TableColumn wednesdayCol;
-    @FXML
-    TableColumn thursdayCol;
-    @FXML
-    TableColumn fridayCol;
-    @FXML
-    TableColumn saturdayCol;
-    @FXML
-    TableColumn sundayCol;
+    @FXML 
+    private Label messageLbl;
     
+    @FXML
+    private TableColumn swimmerCol;
+    @FXML
+    private TableColumn operatorCol;
+    @FXML
+    private TableColumn dateCol;
+    @FXML
+    private TableColumn checkinCol;
+    @FXML
+    private TableColumn durationCol;
+    @FXML
+    private TableColumn checkoutCol;
+    @FXML
+    private TableColumn typeCol;
+    @FXML
+    private TableColumn numberVisitsCol;
+    @FXML
+    private TableColumn averageTimeCol;
+    @FXML
+    private TableColumn totalTimeCol;
+    @FXML
+    private TableColumn timeDayCol;
+    @FXML
+    private TableColumn mondayCol;
+    @FXML
+    private TableColumn tuesdayCol;
+    @FXML
+    private TableColumn wednesdayCol;
+    @FXML
+    private TableColumn thursdayCol;
+    @FXML
+    private TableColumn fridayCol;
+    @FXML
+    private TableColumn saturdayCol;
+    @FXML
+    private TableColumn sundayCol;
     
+    @FXML private TableView tableView;
     
     private Employee currentEmployee;
     private Pool pool;
@@ -97,6 +109,8 @@ public class ReportsController implements Initializable {
         toggleAllColumns(false);
         reportDropdown.getSelectionModel().selectedIndexProperty().addListener(new ReportDropdownChangeListener(reportDropdown));
 
+        
+        
     } 
     
     public void initData(Employee emp, Pool pool){
@@ -243,6 +257,90 @@ public class ReportsController implements Initializable {
         
         window.setScene(tableViewScene);
         window.show();
+    }
+    
+    private void generateReport(String reportType, LocalDate from, LocalDate to){
+        
+        System.out.println("Report: "+reportDropdown.getValue().toString()+"\nFrom: " + from +"\nTo: "+ to);
+        
+        switch (reportType) {
+            case "View Attendance":
+
+                
+                
+
+                break;
+            case "View Swimmers":
+                swimmersReportSelected();
+                break;
+            case "View Visits":
+                
+                swimmerCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("fullName"));
+                operatorCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("operator"));
+                dateCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("date"));
+                checkinCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("checkin"));
+                durationCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("duration"));
+                checkoutCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("checkout"));
+                typeCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("type"));
+
+                ArrayList<Report_Visits> reportVisits = new ArrayList<>();
+
+                for(Swimmer s : pool.getViewReportsSwimmers(from, to)){
+                    Report_Visits tempVisit = new Report_Visits(s, this.currentEmployee.getLastName());
+                    reportVisits.add(tempVisit);
+                }
+                
+                tableView.getItems().setAll(reportVisits);
+                
+                visitsReportSelected();
+                break;
+                
+            default:
+                System.out.println("Selection error");
+                break;
+        }
+    }
+    
+    public void updateButtonClicked(){
+        
+        String fromDate = "";
+        String toDate = "";
+        boolean isAfter = false;
+        try {
+
+            fromDate = this.fromDatePicker.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+            toDate = this.toDatePicker.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+            
+        } catch (java.lang.NullPointerException e) {
+
+            fromDate = "";
+            toDate = "";
+
+        }
+        
+        
+        if(!(fromDate.equals("") || toDate.equals("") || reportDropdown.getSelectionModel().isEmpty())){
+            
+            if(this.toDatePicker.getValue().isAfter(this.fromDatePicker.getValue())){
+                
+                generateReport(reportDropdown.getValue().toString(), this.fromDatePicker.getValue(), this.toDatePicker.getValue());
+                
+                messageLbl.setText("Generate "+reportDropdown.getValue().toString()+" report: " + fromDate +" - "+ toDate);
+
+            } else {
+                messageLbl.setText("Invalid date range.");
+
+            }
+        
+        } else {
+            messageLbl.setText("All fields need to be complete");
+
+        }
+           
+        
+        
+        
+        
     }
     
 }
