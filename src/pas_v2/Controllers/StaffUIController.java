@@ -19,11 +19,17 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pas_v2.Models.Employee;
 import pas_v2.Models.EmployeeList;
+import pas_v2.Models.Pool;
 import pas_v2.Models.RoleEnum;
+import pas_v2.Models.Swimmer;
 
 /**
  * FXML Controller class
@@ -36,6 +42,15 @@ public class StaffUIController implements Initializable {
     @FXML Button editBtn;
     @FXML Button removeBtn;
     
+    @FXML private TableView tableView;
+    
+    @FXML private TextField searchField;
+    
+    @FXML private TableColumn<Employee, String> nameCol;
+    @FXML private TableColumn<Employee, String> userNameCol;
+    @FXML private TableColumn<Employee, String> roleCol;
+    
+    
     private Employee currentEmployee;
     private EmployeeList employeeList;
 
@@ -46,18 +61,24 @@ public class StaffUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-//        try {
-//            employeeList = new EmployeeList();
-//            employeeList.refreshEmployeeList();
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(StaffUIController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            this.employeeList = new EmployeeList();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(StaffUIController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        nameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("fullName"));
+        userNameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("userName"));
+        roleCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("roleAsString"));
+        
+        tableView.getItems().setAll(employeeList.getEmployees());
     }  
     
     public void initData(Employee emp, EmployeeList employeeList){
         this.currentEmployee = emp;
         this.employeeList = employeeList;
         
+        tableView.getItems().setAll(employeeList.getEmployees());
         newEmpBtn.setDisable(!currentEmployee.isFunctionPermitted(RoleEnum.CREATE_EMPLOYEE));
     }
    
@@ -130,13 +151,17 @@ public class StaffUIController implements Initializable {
         
         //This line gets the Stage information
         Stage window = new Stage();
+        Employee targetEmp = (Employee)tableView.getSelectionModel().getSelectedItem();
+        controller.getEmpNameLbl().setText(targetEmp.getFullName());
         window.initModality(Modality.APPLICATION_MODAL);
         window.initOwner((Stage)((Node)event.getSource()).getScene().getWindow());
         window.setScene(scene);
         window.showAndWait();
         
         if (controller.getDecision().equals("yes")){
-            
+            employeeList.removeEmployee((Employee)tableView.getSelectionModel().getSelectedItem());
+            employeeList.saveEmployeeList();
+            tableView.getItems().setAll(employeeList.getEmployees());
             //TODO: create remove employee logic, only admins can remove
             
         }
@@ -167,13 +192,8 @@ public class StaffUIController implements Initializable {
     }
     
     public void performSearch(){
+        String keyword = searchField.getText();
         
-
-        //TODO
-
-
-        //        String keyword = searchField.getText();
-        //        pool.constructActivePool(pool.getActiveSwimmers());
-        //        tableView.getItems().setAll(pool.searchActiveSwimmers(keyword));
+        tableView.getItems().setAll(employeeList.searchEmployees(keyword));
     }
 }

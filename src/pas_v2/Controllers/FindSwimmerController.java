@@ -110,10 +110,7 @@ public class FindSwimmerController implements Initializable {
     public void performSearch(){
         String keyword = searchField.getText();
         
-        
         tableView.getItems().setAll(pool.searchSwimmer(keyword));
-
-        
     }
     
     public void viewProfileBtnClicked(ActionEvent event) throws IOException{

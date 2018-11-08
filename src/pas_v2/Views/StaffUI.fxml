@@ -47,16 +47,17 @@
                         <Insets bottom="10.0" top="10.0" />
                     </VBox.margin>
                 </HBox>
-                <TableView fx:id="tableView" onMouseClicked="#userClickedTable" prefHeight="391.0" prefWidth="800.0">
+                <TableView fx:id="tableView" onMouseClicked="#userClickedTable" prefHeight="391.0" prefWidth="583.0">
                         <placeholder>
-                            <Label prefHeight="17.0" prefWidth="163.0" text="No employees are registered." />
+                            <Label prefHeight="17.0" prefWidth="163.0" text="No employees are found." />
                         </placeholder>    
                         <columns>
                             <TableColumn fx:id="nameCol" prefWidth="288.0" text="Staff Member Name" />
-                            <TableColumn fx:id="ageCol" minWidth="0.0" prefWidth="172.0" text="Privilages" />
+                            <TableColumn fx:id="userNameCol" prefWidth="172.0" text="Username" />
+                            <TableColumn fx:id="roleCol" prefWidth="120.0" text="Role" />
                         </columns>
                         <VBox.margin>
-                            <Insets left="220.0" right="220.0" />
+                            <Insets left="160.0" right="160.0" />
                         </VBox.margin>
                     </TableView>
                 <GridPane alignment="TOP_RIGHT" prefHeight="21.0" prefWidth="901.0">

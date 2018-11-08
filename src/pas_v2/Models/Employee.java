@@ -5,7 +5,7 @@ import java.util.Set;
 
 /**
  *
- * @author d.mikhaylov
+ * @author d.mikhaylov, Drew Hopkins
  */
 public class Employee implements Person {
 
@@ -14,15 +14,20 @@ public class Employee implements Person {
     private EmployeeRoleEnum role;
     private Credential credential;
 
+    
+
     public Employee(String newFirstName, String newLastName, EmployeeRoleEnum role) {
         this.firstName = newFirstName;
         this.lastName = newLastName;
         this.role = role;
-
     }
 
     public String getFullName() {
-        return getFirstName() + " " + getLastName() + ", " + role.getValue();
+        return getFirstName() + " " + getLastName();
+    }
+    
+    public String getRoleAsString() {
+        return role.getValue();
     }
 
     public boolean authenticate(String empID, String password){
@@ -55,13 +60,12 @@ public class Employee implements Person {
     }
 
 
-/**
- * @return the firstName
- */
-public String getFirstName() {
+    /**
+     * @return the firstName
+     */
+    public String getFirstName() {
         return firstName;
     }
-  
     
     /**
      * @return the lastName
@@ -75,6 +79,10 @@ public String getFirstName() {
      */
     public Credential getCredential() {
         return credential;
+    }
+    
+    public String getUserName() {
+        return credential.getEmpID();
     }
     
 }

@@ -33,6 +33,10 @@ public class EmployeeList {
         employees.add(_employee);
     }
     
+    public void removeEmployee(Employee _employee){
+        employees.remove(employees.indexOf(_employee));
+    }
+    
     public boolean doesEmpIdExist(String _empID){
         for (Employee emp : this.employees) 
         { 
@@ -41,6 +45,21 @@ public class EmployeeList {
             }
         }
         return false;
+    }
+    
+    public ArrayList<Employee> searchEmployees(String keyword) {
+        ArrayList<Employee> tempList = new ArrayList<>();
+
+        for (Employee e : employees) {
+            if (e.getFullName().toLowerCase().contains(keyword.toLowerCase()) || 
+                    e.getUserName().toLowerCase().contains(keyword.toLowerCase())) {
+                
+                tempList.add(e);
+            }
+            
+        }
+
+        return tempList;
     }
     
     public Employee findEmployee(String _empID){
@@ -62,9 +81,8 @@ public class EmployeeList {
         fetchEmployeesFromFile();
     }
     
-    public void saveEmployee(Employee newEmployee){
-        addEmployee(newEmployee);
-        storage.write(employees, Swimmer.class);
+    public void saveEmployeeList(){
+        storage.write(employees, Employee.class);
     }
     
     private void fetchEmployeesFromFile() throws FileNotFoundException{

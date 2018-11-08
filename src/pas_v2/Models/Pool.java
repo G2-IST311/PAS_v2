@@ -48,6 +48,10 @@ public class Pool {
     }
     //selectedSwimmer, updatedSwimmer
 
+    /**
+     * Takes pertinent information from swimmer objects in form of strings
+     * @param activeSwimmers 
+     */
     public void constructActivePool(ArrayList<Swimmer> activeSwimmers) {
         activePool.clear();
         for (int i = 0; i < activeSwimmers.size(); i++) {

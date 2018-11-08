@@ -34,7 +34,6 @@ public class RemoveEmpPopoupController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
     }
     
     public void confirmBtnClicked(ActionEvent event) throws IOException{
@@ -52,5 +51,8 @@ public class RemoveEmpPopoupController implements Initializable {
     public String getDecision() {
         return decision;
     }
-    
+
+    public Label getEmpNameLbl() {
+        return empNameLbl;
+    }
 }
