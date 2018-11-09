@@ -53,6 +53,8 @@ public class StaffUIController implements Initializable {
     
     private Employee currentEmployee;
     private EmployeeList employeeList;
+    
+    private boolean isAdmin = false;
 
     
     /**
@@ -72,6 +74,10 @@ public class StaffUIController implements Initializable {
         roleCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("roleAsString"));
         
         tableView.getItems().setAll(employeeList.getEmployees());
+        
+        newEmpBtn.setDisable(true);
+        removeBtn.setDisable(true);
+        editBtn.setDisable(true);
     }  
     
     public void initData(Employee emp, EmployeeList employeeList){
@@ -79,7 +85,13 @@ public class StaffUIController implements Initializable {
         this.employeeList = employeeList;
         
         tableView.getItems().setAll(employeeList.getEmployees());
-        newEmpBtn.setDisable(!currentEmployee.isFunctionPermitted(RoleEnum.CREATE_EMPLOYEE));
+        isAdmin = currentEmployee.isFunctionPermitted(RoleEnum.CREATE_EMPLOYEE); 
+        
+        newEmpBtn.setDisable(!isAdmin);
+//        removeBtn.setDisable(isAdmin);
+//        editBtn.setDisable(isAdmin);
+        
+        
     }
    
     
@@ -187,8 +199,11 @@ public class StaffUIController implements Initializable {
     }
     
     public void userClickedTable(){
-        removeBtn.setDisable(false);
-        editBtn.setDisable(false);
+        if(isAdmin){
+            removeBtn.setDisable(false);
+            editBtn.setDisable(false);
+        }
+        
     }
     
     public void performSearch(){
