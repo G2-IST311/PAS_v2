@@ -5,12 +5,9 @@
  */
 package pas_v2.Controllers;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,7 +39,7 @@ public class NewEmployeeController implements Initializable {
 
     @FXML
     Label MsgLabel;
-    //private javax.swing.JList<String> RoleList;
+    
     @FXML
     Button cnclBtn;
     @FXML

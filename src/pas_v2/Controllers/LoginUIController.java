@@ -5,23 +5,15 @@
  */
 package pas_v2.Controllers;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.swing.event.ChangeEvent;
 import pas_v2.Models.Employee;
 import pas_v2.Models.EmployeeList;
 import pas_v2.Models.FieldTypeEnum;
@@ -62,13 +54,6 @@ public class LoginUIController implements Initializable {
         storage = new Storage();
         employeeList = new EmployeeList(storage.read(Employee.class));
 
-//        try {
-//            employeeList = new EmployeeList();
-//            System.out.println(employeeList.getEmployees().size());
-//            storage.write(employeeList.getEmployees(), Employee.class);
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(LoginUIController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         statusLabel.setText("");
 
     }
@@ -110,14 +95,6 @@ public class LoginUIController implements Initializable {
 
     }
 
-//    public void validate(KeyEvent event) {
-//    String content = event.getCharacter();
-//    if ("123456.".contains(content)) {
-//            // No numbers smaller than 1.0 or bigger than 6.0 - How?
-//    } else {
-//        event.consume();
-//    }
-//}
     public void navigateToMainMenu(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/pas_v2/Views/MainMenuUI.fxml"));
@@ -137,8 +114,24 @@ public class LoginUIController implements Initializable {
 
     }
 
-    public void quitBtnClicked() {
-        System.exit(0);
+    public void quitBtnClicked(ActionEvent event) throws IOException {
+        
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/pas_v2/Views/QuitPopup.fxml"));
+        Parent tableViewParent = loader.load();
+        
+        Scene scene = new Scene(tableViewParent);
+        
+        //access the controller and call a method
+        QuitPopupController controller = loader.getController();
+        
+        //This line gets the Stage information
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.initOwner((Stage)((Node)event.getSource()).getScene().getWindow());
+        window.setScene(scene);
+        window.showAndWait();
+        
 
     }
 
