@@ -50,7 +50,7 @@ public class StaffUIController implements Initializable {
     @FXML private TableColumn<Employee, String> userNameCol;
     @FXML private TableColumn<Employee, String> roleCol;
     
-    
+    private Pool pool;
     private Employee currentEmployee;
     private EmployeeList employeeList;
     
@@ -80,17 +80,16 @@ public class StaffUIController implements Initializable {
         editBtn.setDisable(true);
     }  
     
-    public void initData(Employee emp, EmployeeList employeeList){
+    public void initData(Employee emp, EmployeeList employeeList, Pool pool){
         this.currentEmployee = emp;
         this.employeeList = employeeList;
+        this.pool = pool;
         
         tableView.getItems().setAll(employeeList.getEmployees());
         isAdmin = currentEmployee.isFunctionPermitted(RoleEnum.CREATE_EMPLOYEE); 
         
         newEmpBtn.setDisable(!isAdmin);
-//        removeBtn.setDisable(isAdmin);
-//        editBtn.setDisable(isAdmin);
-        
+
         
     }
    
@@ -106,7 +105,7 @@ public class StaffUIController implements Initializable {
         
         //access the controller and call a method
         NewEmployeeController controller = loader.getController();
-        controller.initData(currentEmployee, employeeList);
+        controller.initData(currentEmployee, employeeList, pool);
         
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -189,6 +188,7 @@ public class StaffUIController implements Initializable {
         //access the controller and call a method
         MainMenuController controller = loader.getController();
         controller.initData(currentEmployee, employeeList);
+        controller.setPool(this.pool);
         
         
         //This line gets the Stage information

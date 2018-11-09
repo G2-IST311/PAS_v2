@@ -40,6 +40,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import pas_v2.Models.Employee;
+import pas_v2.Models.EmployeeList;
 import pas_v2.Models.FieldTypeEnum;
 import pas_v2.Models.GenderEnum;
 import pas_v2.Models.Pool;
@@ -57,6 +58,7 @@ public class ViewSwimmerProfileController implements Initializable {
 
     private Employee currentEmployee;
     private Swimmer selectedSwimmer;
+    private EmployeeList employeeList;
     private Pool pool;
     private String selectedDOB;
     private String backScene;
@@ -153,9 +155,10 @@ public class ViewSwimmerProfileController implements Initializable {
         
     }
 
-    public void initData(Employee emp, Swimmer swimmer, Pool pool, String backScene) {
+    public void initData(Employee emp, Swimmer swimmer, EmployeeList empList, Pool pool, String backScene) {
         this.currentEmployee = emp;
         this.selectedSwimmer = swimmer;
+        this.employeeList = empList;
         this.pool = pool;
         this.backScene = backScene;
         
@@ -408,7 +411,7 @@ public class ViewSwimmerProfileController implements Initializable {
 
         //access the controller and call a method
         FindSwimmerController controller = loader.getController();
-        controller.initData(currentEmployee, pool);
+        controller.initData(currentEmployee, employeeList, pool);
 
         //This line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -428,7 +431,7 @@ public class ViewSwimmerProfileController implements Initializable {
         
         //access the controller and call a method
         ViewPoolController controller = loader.getController();
-        controller.initData(currentEmployee, pool);
+        controller.initData(currentEmployee, employeeList, pool);
         
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

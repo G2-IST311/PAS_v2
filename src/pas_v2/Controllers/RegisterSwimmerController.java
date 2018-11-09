@@ -27,6 +27,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import pas_v2.Models.Employee;
+import pas_v2.Models.EmployeeList;
 import pas_v2.Models.FieldTypeEnum;
 import pas_v2.Models.GenderEnum;
 import pas_v2.Models.Pool;
@@ -92,6 +93,7 @@ public class RegisterSwimmerController implements Initializable {
     private Employee currentEmployee;
     private Swimmer createdSwimmer;
     private Pool pool;
+    private EmployeeList employeeList;
 
     private String selectedDOB;
 
@@ -115,8 +117,9 @@ public class RegisterSwimmerController implements Initializable {
         
     }
 
-    public void initData(Employee emp, Pool pool) {
+    public void initData(Employee emp, EmployeeList empList, Pool pool) {
         this.currentEmployee = emp;
+        this.employeeList = empList;
         this.pool = pool;
     }
 
@@ -199,7 +202,7 @@ public class RegisterSwimmerController implements Initializable {
 
         //access the controller and call a method
         FindSwimmerController controller = loader.getController();
-        controller.initData(currentEmployee, pool);
+        controller.initData(currentEmployee, employeeList, pool);
 
         //This line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

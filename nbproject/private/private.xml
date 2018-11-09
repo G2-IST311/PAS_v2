@@ -2,37 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Controllers/StaffUIController.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Models/Parameters.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Controllers/RemoveEmpPopoupController.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Controllers/MainMenuController.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Controllers/EditEmpPopupController.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Controllers/RegisterSwimmerController.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Models/Storage.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Views/RemoveEmpPopup.fxml</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Models/Credential.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Views/EditEmpPopup.fxml</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Controllers/NewEmployeeController.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Models/Validator.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Models/Pool.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Models/Employee.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/PAS_v2.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Controllers/LoginUIController.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Controllers/FindSwimmerController.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Views/FindSwimmerUI.fxml</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Views/NewEmployeeUI.fxml</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Views/ViewPoolUI.fxml</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Models/Swimmer.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Controllers/QuitPopupController.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Controllers/LogoutPopupController.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Models/Person.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Models/EmployeeRoleEnum.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Models/EmployeeList.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Models/ActiveSwimmerData.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Controllers/ViewPoolController.java</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Views/StaffUI.fxml</file>
-            <file>file:/C:/Users/andre/Documents/NetBeansProjects/PAS_v2/src/pas_v2/Models/Admin.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

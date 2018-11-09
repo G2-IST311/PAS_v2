@@ -1,22 +1,16 @@
 package pas_v2.Models;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.lang.reflect.Type;
+//import java.io.FileInputStream;
+//import java.io.FileOutputStream;
+//import java.io.IOException;
+//import java.io.ObjectInputStream;
+//import java.io.ObjectOutputStream;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pas_v2.Models.Reports.Report;
+
 
 /**
  *
@@ -26,103 +20,161 @@ public class Pool {
 
     private Report report;
     private ArrayList<Swimmer> swimmers;
-    ArrayList<Swimmer> activeSwimmers;
-    ArrayList<ActiveSwimmerData> activePool;
+    private ArrayList<Swimmer> activeSwimmers;
+    private ArrayList<ActiveSwimmerData> activePool;
     private ArrayList<Visit> visits;
     private Storage storage;
+    
+   
 
     public Pool() {
-        swimmers = new ArrayList<Swimmer>();
+        swimmers = new ArrayList<>();
         visits = new ArrayList<>();
         report = new Report(this);
         activeSwimmers = new ArrayList<>();
         activePool = new ArrayList<>();
         storage = new Storage();
+        
         this.readSwimmerListFile();
-        if (swimmers.isEmpty() || swimmers == null) {
+
+        if(swimmers.isEmpty() || swimmers == null){
+
             this.writeSwimmerListFile();
             this.readSwimmerListFile();
+
         }
-
-        //printSwimmerList();
+        
     }
-    //selectedSwimmer, updatedSwimmer
+    
+    public ArrayList<Visit> getPoolVisits(LocalDate from, LocalDate to){
+        ArrayList<Visit> tempVisits = new ArrayList<>();
 
-    /**
-     * Takes pertinent information from swimmer objects in form of strings
-     * @param activeSwimmers 
-     */
-    public void constructActivePool(ArrayList<Swimmer> activeSwimmers) {
+        for(Swimmer s : swimmers){
+            
+            for(Visit v : s.getVisits()){
+                
+                try{
+                    LocalDate swimmerCheckin = v.getCheckinDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate swimmerCheckout = v.getCheckoutDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+                    if(((swimmerCheckin.isAfter(from) || swimmerCheckin.isEqual(from)) && (swimmerCheckout.isBefore(to)) || swimmerCheckout.isEqual(to))){
+
+                        tempVisits.add(v);
+
+
+                    }
+                
+                } catch (NullPointerException e){
+
+                }
+            
+            }
+         
+        }
+        
+        return tempVisits;
+        
+    }
+   
+    public ArrayList<Swimmer> getViewReportsSwimmers(LocalDate from, LocalDate to){
+        ArrayList<Swimmer> tempSwimmers = new ArrayList<>();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        for(Swimmer s : swimmers){
+            
+            try{
+                LocalDate swimmerCheckin = s.getCurrentVisit().getCheckinDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate swimmerCheckout = s.getCurrentVisit().getCheckoutDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+             
+                if(((swimmerCheckin.isAfter(from) || swimmerCheckin.isEqual(from)) && (swimmerCheckout.isBefore(to)) || swimmerCheckout.isEqual(to))){
+                    tempSwimmers.add(s);
+                }
+                
+            } catch (NullPointerException e){
+                
+            }
+
+        }
+        
+        return tempSwimmers;
+        
+    }
+    
+    public void constructActivePool(ArrayList<Swimmer> activeSwimmers){
         activePool.clear();
-        for (int i = 0; i < activeSwimmers.size(); i++) {
+        for(int i = 0; i < activeSwimmers.size(); i++){
             ActiveSwimmerData data = new ActiveSwimmerData(activeSwimmers.get(i));
-            //data.fillData(activeSwimmers.get(i));
             activePool.add(data);
         }
-
+        
     }
-
-    public void clearActiveSwimmers() {
+    
+    public void clearActiveSwimmers(){
         this.activeSwimmers.clear();
         this.activePool.clear();
     }
-
-    public void updateSwimmer(Swimmer originalSwimmer, Swimmer updatedSwimmer) {
+    
+    public void updateSwimmer(Swimmer originalSwimmer, Swimmer updatedSwimmer){
         swimmers.set(swimmers.indexOf(originalSwimmer), updatedSwimmer);
-
+        
     }
-
-    public void changeSwimmerStatus(Swimmer tempSwimmer, boolean status) {
+    
+    public void changeSwimmerStatus(Swimmer tempSwimmer, boolean status){
         swimmers.get(swimmers.indexOf(tempSwimmer)).setCheckedStatus(status);
-
+        
         this.writeSwimmerListFile();
     }
-
-    public void deleteSwimmer(Swimmer swimmer) {
+    
+    public void deleteSwimmer(Swimmer swimmer){
         swimmers.remove(swimmer);
         swimmers.trimToSize();
     }
-
-    public ArrayList<Swimmer> searchSwimmer(String keyword) {
+    
+    public ArrayList<Swimmer> searchSwimmer(String keyword){
         ArrayList<Swimmer> tempList = new ArrayList<>();
-
-        for (Swimmer s : swimmers) {
-            if (s.getSwimmerInformation().toLowerCase().contains(keyword.toLowerCase())) {
+        
+        for(Swimmer s : swimmers){
+            if(s.getSwimmerInformation().toLowerCase().contains(keyword.toLowerCase())){
                 tempList.add(s);
             }
         }
-
+        
         return tempList;
     }
-
-    public ArrayList<ActiveSwimmerData> searchActiveSwimmers(String keyword) {
+    
+    public ArrayList<ActiveSwimmerData> searchActiveSwimmers(String keyword){
         ArrayList<ActiveSwimmerData> tempList = new ArrayList<>();
-
-        for (Swimmer tempActive : this.activeSwimmers) {
-            if (tempActive.getSwimmerInformation().toLowerCase().contains(keyword.toLowerCase())) {
-
+        
+        for(Swimmer tempActive : this.activeSwimmers){
+            if(tempActive.getSwimmerInformation().toLowerCase().contains(keyword.toLowerCase())){
+                
+                
                 ActiveSwimmerData tempSwimmer = new ActiveSwimmerData(tempActive);
                 tempSwimmer.setVisits(tempActive.getVisits());
                 tempSwimmer.setNote(tempActive.getNote());
-
+            
+                
                 tempList.add(tempSwimmer);
             }
         }
-
+        
         return tempList;
     }
-
-    public void readSwimmerListFile() {
+    
+    public void readSwimmerListFile(){
         swimmers = storage.read(Swimmer.class);
-    }
 
-    public void writeSwimmerListFile() {
+    }
+    
+    public void writeSwimmerListFile(){
         storage.write(swimmers, Swimmer.class);
-    }
 
-    public void printSwimmerList() {
+    }
+    
+    public void printSwimmerList(){
         System.out.println("The SwimmerList has these swimmers:");
-        for (int i = 0; i < swimmers.size(); i++) {
+        for(int i = 0; i < swimmers.size(); i++){
             Swimmer currentUser = (Swimmer) swimmers.get(i);
             System.out.println(currentUser.getSwimmerInformation());
         }
@@ -149,29 +201,29 @@ public class Pool {
     /**
      * @return only swimmers in an active status
      */
-    public ArrayList<Swimmer> getActiveSwimmers() {
+    public ArrayList<Swimmer> getActiveSwimmers(){
         activeSwimmers.removeAll(swimmers);
-        for (int i = 0; i < swimmers.size(); i++) {
-            if (swimmers.get(i).getCheckedStatus().equals("Checked in")) {
+        for(int i=0; i<swimmers.size(); i++){
+            if(swimmers.get(i).getCheckedStatus().equals("Checked in")){
                 activeSwimmers.add(swimmers.get(i));
-            }
+            }   
         }
         return activeSwimmers;
     }
-
+    
     /**
      * @return the visits
      */
     public ArrayList<Visit> getVisits() {
         return visits;
     }
-
-    public void addSwimmer(Swimmer swimmer) {
+    
+    public void addSwimmer(Swimmer swimmer){
         swimmers.add(swimmer);
     }
-
-    public void addVisit(Swimmer swimmer) {
+    
+    public void addVisit(Swimmer swimmer){
         visits.add(new Visit(swimmer));
     }
-
+    
 }

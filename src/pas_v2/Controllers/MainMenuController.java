@@ -51,9 +51,11 @@ public class MainMenuController implements Initializable {
         
         welcome(emp.getFirstName());
         
-
         reportsBtn.setDisable(!currentEmployee.isFunctionPermitted(RoleEnum.VIEW_REPORTS));
         
+    }
+    public void setPool(Pool pool){
+        this.pool = pool;
     }
     
     public void setEmployee(Employee emp){
@@ -76,12 +78,6 @@ public class MainMenuController implements Initializable {
         return this.pool;
     }
     
-    public void setPool(Pool pool){
-        this.pool = pool;
-        
-
-    }
-    
     public void findSwimmerBtnClicked(ActionEvent event) throws IOException
     {
         FXMLLoader loader = new FXMLLoader();
@@ -92,7 +88,7 @@ public class MainMenuController implements Initializable {
         
         //access the controller and call a method
         FindSwimmerController controller = loader.getController();
-        controller.initData(currentEmployee, pool);
+        controller.initData(currentEmployee, employeeList, pool);
         
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -113,7 +109,7 @@ public class MainMenuController implements Initializable {
         
         //access the controller and call a method
         StaffUIController controller = loader.getController();
-        controller.initData(currentEmployee, employeeList);
+        controller.initData(currentEmployee, employeeList, pool);
         
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -133,7 +129,7 @@ public class MainMenuController implements Initializable {
         
         //access the controller and call a method
         ViewPoolController controller = loader.getController();
-        controller.initData(currentEmployee, pool);
+        controller.initData(currentEmployee, employeeList, pool);
         
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -145,23 +141,22 @@ public class MainMenuController implements Initializable {
     
     public void reportsButtonClicked(ActionEvent event) throws IOException
     {
-        System.out.println("The Report section is being under development and not finished yet.");
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(getClass().getResource("/pas_v2/Views/ReportsUI.fxml"));
-//        Parent tableViewParent = loader.load();
-//        
-//        Scene tableViewScene = new Scene(tableViewParent);
-//        
-//        //access the controller and call a method
-//        ReportsController controller = loader.getController();
-//        controller.initData(currentEmployee, pool);
-//        
-//        //This line gets the Stage information
-//        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-//
-//        
-//        window.setScene(tableViewScene);
-//        window.show();        
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/pas_v2/Views/ReportsUI.fxml"));
+        Parent tableViewParent = loader.load();
+        
+        Scene tableViewScene = new Scene(tableViewParent);
+        
+        //access the controller and call a method
+        ReportsController controller = loader.getController();
+        controller.initData(currentEmployee, employeeList, pool);
+        
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        
+        window.setScene(tableViewScene);
+        window.show();        
     }
     
    

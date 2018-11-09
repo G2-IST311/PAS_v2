@@ -29,6 +29,7 @@ import pas_v2.Models.Employee;
 import pas_v2.Models.EmployeeList;
 import pas_v2.Models.EmployeeRoleEnum;
 import pas_v2.Models.FieldTypeEnum;
+import pas_v2.Models.Pool;
 import pas_v2.Models.Storage;
 import pas_v2.Models.Validator;
 
@@ -66,10 +67,12 @@ public class NewEmployeeController implements Initializable {
     private Employee currentEmployee;
     private Storage storage;
     private EmployeeRoleEnum role;
+    private Pool pool;
 
-    public void initData(Employee emp, EmployeeList employeeList) {
+    public void initData(Employee emp, EmployeeList employeeList, Pool pool) {
         this.employeeList = employeeList;
         this.currentEmployee = emp;
+        this.pool = pool;
 
     }
 
@@ -127,7 +130,7 @@ public class NewEmployeeController implements Initializable {
 
         //access the controller and call a method
         StaffUIController controller = loader.getController();
-        controller.initData(currentEmployee, employeeList);
+        controller.initData(currentEmployee, employeeList, pool);
 
         //This line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();

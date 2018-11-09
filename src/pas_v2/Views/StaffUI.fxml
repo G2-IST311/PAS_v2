@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -14,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pas_v2.Controllers.StaffUIController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pas_v2.Controllers.StaffUIController">
     <children>
         <HBox layoutX="596.0" layoutY="544.0" prefHeight="20.0" prefWidth="881.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="4.0" />
         <VBox layoutY="1.0" prefHeight="518.0" prefWidth="901.0">
@@ -96,7 +102,15 @@
                 </GridPane>
             </children>
         </VBox>
-      <Button id="backBtn" fx:id="backBtn" layoutX="735.0" layoutY="532.0" mnemonicParsing="false" onAction="#navigateToMainMenu" prefHeight="38.0" prefWidth="133.0" text="Back" />
-      <Button id="newEmpBtn" fx:id="newEmpBtn" layoutX="569.0" layoutY="532.0" mnemonicParsing="false" onAction="#newEmpBtnClicked" prefHeight="38.0" prefWidth="133.0" text="New Employee" />
+      <Button id="backBtn" fx:id="backBtn" layoutX="457.0" layoutY="532.0" mnemonicParsing="false" onAction="#navigateToMainMenu" prefHeight="38.0" prefWidth="133.0" text="Back" />
+      <Button fx:id="newEmpBtn" layoutX="613.0" layoutY="532.0" mnemonicParsing="false" onAction="#newEmpBtnClicked" prefHeight="38.0" prefWidth="206.0" text="New Employee">
+         <graphic>
+            <ImageView fx:id="newEmpIcon" fitHeight="28.0" fitWidth="22.0" layoutX="39.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image backgroundLoading="true" url="/pas_v2/Resources/icons/new.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
     </children>
 </AnchorPane>

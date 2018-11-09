@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.collections.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pas_v2.Controllers.ReportsController">
+    
+    <children>
+        <HBox layoutX="596.0" layoutY="544.0" prefHeight="20.0" prefWidth="881.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="4.0" />
+        <VBox layoutY="1.0" prefHeight="518.0" prefWidth="901.0">
+            <children>
+                <Label prefHeight="61.0" prefWidth="323.0" text="Reports">
+                    <font>
+                        <Font size="36.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="30.0" top="20.0" />
+                    </VBox.margin>
+                </Label>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="104.0" text="Report Type">
+                           <HBox.margin>
+                              <Insets left="10.0" top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ChoiceBox fx:id="reportDropdown" prefWidth="150.0">
+                            <items>
+                                  <FXCollections fx:factory="observableArrayList">
+                                     <String fx:value="View Visits" />
+                                     <String fx:value="View Swimmers" />
+                                     <String fx:value="View Attendance" />
+                                  </FXCollections>
+                               </items>
+                           <HBox.margin>
+                              <Insets bottom="5.0" />
+                           </HBox.margin>
+                        </ChoiceBox>
+                     </children>
+                     <GridPane.margin>
+                        <Insets top="5.0" />
+                     </GridPane.margin>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="9.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="38.0" text="From">
+                           <HBox.margin>
+                              <Insets left="10.0" top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <DatePicker fx:id="fromDatePicker" prefHeight="27.0" prefWidth="154.0">
+                           <HBox.margin>
+                              <Insets left="5.0" right="10.0" />
+                           </HBox.margin>
+                        </DatePicker>
+                     </children>
+                  </HBox>
+                  <HBox layoutX="236.0" layoutY="9.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="23.0" text="To">
+                           <HBox.margin>
+                              <Insets left="10.0" top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <DatePicker fx:id="toDatePicker" prefHeight="27.0" prefWidth="173.0" />
+                     </children>
+                  </HBox>
+                  <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateButtonClicked" prefHeight="27.0" prefWidth="80.0" text="Update" GridPane.columnIndex="3">
+                     <GridPane.margin>
+                        <Insets left="50.0" />
+                     </GridPane.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </VBox.margin>
+            </GridPane>
+                <TableView fx:id="tableView" prefHeight="394.0" prefWidth="881.0">
+                        <VBox.margin>
+                            <Insets left="10.0" right="10.0" top="10.0" />
+                        </VBox.margin>
+               <columns>
+                  <TableColumn fx:id="swimmerCol" minWidth="170.0" prefWidth="-1.0" text="Swimmer" />
+                  <TableColumn fx:id="dateCol" minWidth="90.0" prefWidth="-1.0" text="Date" />
+                  <TableColumn fx:id="checkinCol" minWidth="90.0" prefWidth="-1.0" text="Check-in" />
+                  <TableColumn fx:id="durationCol" minWidth="90.0" prefWidth="-1.0" text="Duration" />
+                  <TableColumn fx:id="checkoutCol" minWidth="90.0" prefWidth="-1.0" text="Check-out" />
+                  <TableColumn fx:id="typeCol" minWidth="90.0" prefWidth="-1.0" text="Type" />
+                  <TableColumn fx:id="numberVisitsCol" minWidth="90.0" prefWidth="122.0" text="Number of Visits" />
+                  <TableColumn fx:id="averageTimeCol" minWidth="100.0" prefWidth="58.0" text="Average Time" />
+                  <TableColumn fx:id="totalTimeCol" minWidth="90.0" prefWidth="-1.0" text="Total Time" />
+                  <TableColumn fx:id="timeDayCol" minWidth="150.0" prefWidth="-1.0" text="Time/Day" />
+                  <TableColumn fx:id="mondayCol" minWidth="90.0" prefWidth="-1.0" text="Monday" />
+                  <TableColumn fx:id="tuesdayCol" minWidth="90.0" prefWidth="-1.0" text="Tuesday" />
+                  <TableColumn fx:id="wednesdayCol" minWidth="90.0" prefWidth="-1.0" text="Wednesday" />
+                  <TableColumn fx:id="thursdayCol" minWidth="90.0" prefWidth="-1.0" text="Thursday" />
+                  <TableColumn fx:id="fridayCol" minWidth="90.0" prefWidth="-1.0" text="Friday" />
+                  <TableColumn fx:id="saturdayCol" minWidth="90.0" prefWidth="-1.0" text="Saturday" />
+                  <TableColumn fx:id="sundayCol" minWidth="90.0" prefWidth="-1.0" text="Sunday" />
+                  <TableColumn fx:id="operatorCol" minWidth="90.0" prefWidth="-1.0" text="Operator" />
+                  <TableColumn fx:id="weekCol" minWidth="90.0" prefWidth="-1.0" text="Week Total" />
+               </columns>
+                    </TableView>
+            </children>
+        </VBox>
+          <Button fx:id="backButton" layoutX="722.0" layoutY="532.0" mnemonicParsing="false" onAction="#navigateToMainMenu" prefHeight="38.0" prefWidth="133.0" text="Back" />
+      <Label fx:id="messageLbl" layoutX="14.0" layoutY="551.0" prefHeight="17.0" prefWidth="645.0" text=" " />
+      <Label layoutX="13.0" layoutY="526.0" text="Status" />
+    </children>
+</AnchorPane>
