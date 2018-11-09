@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="293.0" prefWidth="448.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pas_v2.Controllers.QuitPopupController">
+<AnchorPane id="AnchorPane" prefHeight="293.0" prefWidth="448.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pas_v2.Controllers.QuitPopupController">
    <children>
-      <Button id="confirmBtn" layoutX="291.0" layoutY="217.0" mnemonicParsing="false" onAction="#confirmBtnClicked" prefHeight="40.0" prefWidth="77.0" text="Confrim" />
+      <Button id="confirmBtn" layoutX="291.0" layoutY="217.0" mnemonicParsing="false" onAction="#confirmBtnClicked" prefHeight="40.0" prefWidth="77.0" text="Confirm" />
       <Button id="cancelBtn" layoutX="80.0" layoutY="217.0" mnemonicParsing="false" onAction="#cancelBtnClicked" prefHeight="40.0" prefWidth="77.0" text="Cancel" />
-      <Label id="warning" layoutX="118.0" layoutY="89.0" prefHeight="40.0" prefWidth="211.0" text="You have selected to exit the program." />
-      <Label id="question" layoutX="185.0" layoutY="135.0" prefHeight="40.0" prefWidth="77.0" text="Are you sure?" textAlignment="CENTER" />
+      <Label id="warning" alignment="CENTER" layoutX="80.0" layoutY="79.0" prefHeight="40.0" prefWidth="287.0" text="You have selected to exit the program." />
+      <Label id="question" alignment="CENTER" layoutX="149.0" layoutY="134.0" prefHeight="40.0" prefWidth="150.0" text="Are you sure?" textAlignment="CENTER" />
    </children>
 </AnchorPane>

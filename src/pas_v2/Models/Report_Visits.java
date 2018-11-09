@@ -22,13 +22,18 @@ public class Report_Visits {
     private Date date;
     private DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
-    public Report_Visits(Swimmer s, String operator) {
+    public Report_Visits(Swimmer s, Visit v, String operator) {
         this.fullName = s.getFullName();
         this.operator = operator;
         this.date = s.getCurrentVisit().getCheckinDate();
-        this.checkin = s.getCurrentVisit().getCheckInTime();
-        this.duration = s.getCurrentVisit().getTotalDuration();
-        this.checkout = s.getCurrentVisit().getCheckOutTime();
+//        this.checkin = s.getCurrentVisit().getCheckInTime();
+//        this.duration = s.getCurrentVisit().getTotalDuration();
+//        this.checkout = s.getCurrentVisit().getCheckOutTime();
+       
+        
+        this.checkin = v.getCheckInTime();
+        this.duration = v.getTotalDuration();
+        this.checkout = v.getCheckOutTime();
         
         
         //get age
@@ -62,8 +67,8 @@ public class Report_Visits {
         return checkin;
     }
 
-    public long getDuration() {
-        return duration;
+    public String getDuration() {
+        return duration + " mins";
     }
 
     public String getCheckout() {
@@ -71,13 +76,7 @@ public class Report_Visits {
     }
 
     public String getType() {
-        
-        
-        
-        
         return type;
-        
-        
     }
     
     
