@@ -46,6 +46,36 @@ public class Pool {
         
     }
     
+    public ArrayList<Visit> getPoolVisits(LocalDate from, LocalDate to){
+        ArrayList<Visit> tempVisits = new ArrayList<>();
+
+        for(Swimmer s : swimmers){
+            
+            for(Visit v : s.getVisits()){
+                
+                try{
+                    LocalDate swimmerCheckin = v.getCheckinDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate swimmerCheckout = v.getCheckoutDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+                    if(((swimmerCheckin.isAfter(from) || swimmerCheckin.isEqual(from)) && (swimmerCheckout.isBefore(to)) || swimmerCheckout.isEqual(to))){
+
+                        tempVisits.add(v);
+
+
+                    }
+                
+                } catch (NullPointerException e){
+
+                }
+            
+            }
+         
+        }
+        
+        return tempVisits;
+        
+    }
+   
     public ArrayList<Swimmer> getViewReportsSwimmers(LocalDate from, LocalDate to){
         ArrayList<Swimmer> tempSwimmers = new ArrayList<>();
 
@@ -57,7 +87,7 @@ public class Pool {
                 LocalDate swimmerCheckin = s.getCurrentVisit().getCheckinDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate swimmerCheckout = s.getCurrentVisit().getCheckoutDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
              
-                if((swimmerCheckin.isAfter(from) || swimmerCheckin.isEqual(from)) && (swimmerCheckout.isBefore(to)) || swimmerCheckout.isEqual(to)){
+                if(((swimmerCheckin.isAfter(from) || swimmerCheckin.isEqual(from)) && (swimmerCheckout.isBefore(to)) || swimmerCheckout.isEqual(to))){
                     tempSwimmers.add(s);
                 }
                 
@@ -75,7 +105,6 @@ public class Pool {
         activePool.clear();
         for(int i = 0; i < activeSwimmers.size(); i++){
             ActiveSwimmerData data = new ActiveSwimmerData(activeSwimmers.get(i));
-            //data.fillData(activeSwimmers.get(i));
             activePool.add(data);
         }
         

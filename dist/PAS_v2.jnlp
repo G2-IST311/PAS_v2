@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="PAS_v2.jar" size="7716074" download="eager" />
+    <jar href="PAS_v2.jar" size="7550820" download="eager" />
     <jar href="lib/gson-2.8.5-javadoc.jar" size="253187" download="eager" />
     <jar href="lib/gson-2.8.5.jar" size="241622" download="eager" />
   </resources>

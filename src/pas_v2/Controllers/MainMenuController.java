@@ -33,7 +33,9 @@ import pas_v2.Models.RoleEnum;
  */
 public class MainMenuController implements Initializable {
 
-    @FXML MenuBar menuBar;
+    //@FXML MenuBar menuBar;
+    @FXML Button logoutBtn;
+    
     @FXML Label greetingLable;
     @FXML Button findSwimmerBtn;
     @FXML Button viewPoolBtn;
@@ -191,8 +193,9 @@ public class MainMenuController implements Initializable {
         if (controller.getDecision().equals("yes")){
             tableViewParent = FXMLLoader.load(getClass().getResource("/pas_v2/Views/LoginUI.fxml"));
             Scene tableViewScene = new Scene(tableViewParent);
+            Stage logoutWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
 
-            Stage logoutWindow = (Stage) menuBar.getScene().getWindow();
+            //Stage logoutWindow = (Stage) (N).getScene().getWindow();
 
             logoutWindow.setScene(tableViewScene);
             logoutWindow.show();

@@ -22,7 +22,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import pas_v2.Models.Employee;
 import pas_v2.Models.Pool;
@@ -31,6 +30,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import pas_v2.Models.Report_Attendance;
+import pas_v2.Models.Report_Swimmers;
 import pas_v2.Models.Report_Visits;
 import pas_v2.Models.Swimmer;
 import pas_v2.Models.Visit;
@@ -45,20 +46,15 @@ public class ReportsController implements Initializable {
 
     @FXML
     private ChoiceBox reportDropdown;
-    @FXML
-    private ChoiceBox statisticDropdown;
     @FXML 
     private DatePicker fromDatePicker;
     @FXML 
     private DatePicker toDatePicker;
     @FXML
     private Button updateButton;
-    @FXML
-    private HBox statisticSection;
     
     @FXML 
     private Label messageLbl;
-    
     @FXML
     private TableColumn swimmerCol;
     @FXML
@@ -95,8 +91,11 @@ public class ReportsController implements Initializable {
     private TableColumn saturdayCol;
     @FXML
     private TableColumn sundayCol;
+    @FXML
+    private TableColumn weekCol;
     
-    @FXML private TableView tableView;
+    @FXML
+    private TableView tableView;
     
     private Employee currentEmployee;
     private Pool pool;
@@ -105,12 +104,9 @@ public class ReportsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        statisticSection.setVisible(false);
         toggleAllColumns(false);
         reportDropdown.getSelectionModel().selectedIndexProperty().addListener(new ReportDropdownChangeListener(reportDropdown));
 
-        
-        
     } 
     
     public void initData(Employee emp, Pool pool){
@@ -129,6 +125,9 @@ public class ReportsController implements Initializable {
         @Override
         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
             
+            messageLbl.setText("");
+            tableView.getItems().clear();
+
             String selection = reportDropdown.getItems().get((Integer)newValue).toString();
             
             switch (selection) {
@@ -150,25 +149,125 @@ public class ReportsController implements Initializable {
 
     }
    
+    private void generateReport(String reportType, LocalDate from, LocalDate to){
+        
+        switch (reportType) {
+            case "View Attendance":
+                
+                timeDayCol.setCellValueFactory(new PropertyValueFactory<Report_Attendance, String>("hour"));
+                mondayCol.setCellValueFactory(new PropertyValueFactory<Report_Attendance, String>("monday"));
+                tuesdayCol.setCellValueFactory(new PropertyValueFactory<Report_Attendance, String>("tuesday"));
+                wednesdayCol.setCellValueFactory(new PropertyValueFactory<Report_Attendance, String>("wednesday"));
+                thursdayCol.setCellValueFactory(new PropertyValueFactory<Report_Attendance, String>("thursday"));
+                fridayCol.setCellValueFactory(new PropertyValueFactory<Report_Attendance, String>("friday"));
+                saturdayCol.setCellValueFactory(new PropertyValueFactory<Report_Attendance, String>("saturday"));
+                sundayCol.setCellValueFactory(new PropertyValueFactory<Report_Attendance, String>("sunday"));
+                weekCol.setCellValueFactory(new PropertyValueFactory<Report_Attendance, String>("weekTotal"));
+                
+                ArrayList<Report_Attendance> reportAttendance = new ArrayList<>();
+                ArrayList<Visit> _visits = pool.getPoolVisits(from, to);
+
+                int hour = 8;
+                
+                for(int i =8; i <=20; i++){
+                    Report_Attendance tempVisit = new Report_Attendance(_visits, hour);
+                    reportAttendance.add(tempVisit);
+                    hour++;
+                }
+                
+                tableView.getItems().setAll( generateLastRow(reportAttendance) );
+
+                break;
+                
+            case "View Swimmers":
+                
+                swimmerCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("fullName"));
+                numberVisitsCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("numberVisits"));
+                averageTimeCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("averageTime"));
+                totalTimeCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("totalTime"));
+                typeCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("type"));
+
+                ArrayList<Report_Swimmers> reportSwimmers = new ArrayList<>();
+
+                for(Swimmer s : pool.getViewReportsSwimmers(from, to)){
+                    Report_Swimmers tempVisit = new Report_Swimmers(s);
+                    reportSwimmers.add(tempVisit);
+                }
+                
+                tableView.getItems().setAll(reportSwimmers);
+
+                break;
+                
+            case "View Visits":
+                
+                swimmerCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("fullName"));
+                operatorCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("operator"));
+                dateCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("date"));
+                checkinCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("checkin"));
+                durationCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("duration"));
+                checkoutCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("checkout"));
+                typeCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("type"));
+
+                ArrayList<Report_Visits> reportVisits = new ArrayList<>();
+
+                for(Swimmer s : pool.getViewReportsSwimmers(from, to)){
+                    for(Visit v : s.getVisits()){
+                        Report_Visits tempVisit = new Report_Visits(s, v, this.currentEmployee.getLastName());
+                        reportVisits.add(tempVisit);
+                    }
+                    
+                }
+                
+                tableView.getItems().setAll(reportVisits);
+                
+                break;
+                
+            default:
+                System.out.println("Selection error");
+                break;
+        }
+    }
+    
+    private ArrayList<Report_Attendance> generateLastRow(ArrayList<Report_Attendance> _reportAttendance){
+        
+        int _mon = 0, _tues = 0, _wed = 0, _thur = 0, _fri = 0, _sat = 0, _sun = 0;
+        
+        for(Report_Attendance visit : _reportAttendance){
+            _mon += visit.getMonday();
+            _tues += visit.getTuesday();
+            _wed += visit.getWednesday();
+            _thur += visit.getThursday();
+            _fri += visit.getFriday();
+            _sat += visit.getSaturday();
+            _sun += visit.getSunday();
+        }
+        
+        ArrayList<Integer> days = new ArrayList<>();
+        days.add(_mon);
+        days.add(_tues);
+        days.add(_wed);
+        days.add(_thur);
+        days.add(_fri);
+        days.add(_sat);
+        days.add(_sun);
+        
+        Report_Attendance temp = new Report_Attendance(days);
+        _reportAttendance.add(temp);
+        
+        return _reportAttendance;
+    }
+    
     
     private void visitsReportSelected(){
-        statisticSection.setVisible(false);
         toggleVisitsColumns(true);
-        
-        System.out.println("View Visits selected");
     }
     
     private void swimmersReportSelected(){
-        statisticSection.setVisible(false);
         toggleSwimmersColumns(true);
-        System.out.println("View Swimmers selected");
     }
     
     private void attendanceReportSelected(){
-        statisticSection.setVisible(true);
         toggleAttendanceColumns(true);
-        System.out.println("View Attendance selected");
-
     }
     
     private void toggleVisitsColumns(boolean toggle){
@@ -188,20 +287,17 @@ public class ReportsController implements Initializable {
     private void toggleSwimmersColumns(boolean toggle){
         toggleAllColumns(false);
 
-        
         swimmerCol.setVisible(toggle);
         numberVisitsCol.setVisible(toggle);
         averageTimeCol.setVisible(toggle);
         totalTimeCol.setVisible(toggle);
         typeCol.setVisible(toggle);
 
-        
     }
     
     private void toggleAttendanceColumns(boolean toggle){
         toggleAllColumns(false);
 
-        
         timeDayCol.setVisible(toggle);
         mondayCol.setVisible(toggle);
         tuesdayCol.setVisible(toggle);
@@ -210,6 +306,7 @@ public class ReportsController implements Initializable {
         fridayCol.setVisible(toggle);
         saturdayCol.setVisible(toggle);
         sundayCol.setVisible(toggle);
+        weekCol.setVisible(toggle);
     }
     
     private void toggleAllColumns(boolean toggle){
@@ -231,15 +328,10 @@ public class ReportsController implements Initializable {
         fridayCol.setVisible(toggle);
         saturdayCol.setVisible(toggle);
         sundayCol.setVisible(toggle);
+        weekCol.setVisible(toggle);
     }
     
-    
-    
-    
-    
-    
     public void navigateToMainMenu(ActionEvent event) throws IOException{
-        
         
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/pas_v2/Views/MainMenuUI.fxml"));
@@ -259,53 +351,11 @@ public class ReportsController implements Initializable {
         window.show();
     }
     
-    private void generateReport(String reportType, LocalDate from, LocalDate to){
-        
-        System.out.println("Report: "+reportDropdown.getValue().toString()+"\nFrom: " + from +"\nTo: "+ to);
-        
-        switch (reportType) {
-            case "View Attendance":
-
-                
-                
-
-                break;
-            case "View Swimmers":
-                swimmersReportSelected();
-                break;
-            case "View Visits":
-                
-                swimmerCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("fullName"));
-                operatorCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("operator"));
-                dateCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("date"));
-                checkinCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("checkin"));
-                durationCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("duration"));
-                checkoutCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("checkout"));
-                typeCol.setCellValueFactory(new PropertyValueFactory<Report_Visits, String>("type"));
-
-                ArrayList<Report_Visits> reportVisits = new ArrayList<>();
-
-                for(Swimmer s : pool.getViewReportsSwimmers(from, to)){
-                    Report_Visits tempVisit = new Report_Visits(s, this.currentEmployee.getLastName());
-                    reportVisits.add(tempVisit);
-                }
-                
-                tableView.getItems().setAll(reportVisits);
-                
-                visitsReportSelected();
-                break;
-                
-            default:
-                System.out.println("Selection error");
-                break;
-        }
-    }
-    
     public void updateButtonClicked(){
         
         String fromDate = "";
         String toDate = "";
-        boolean isAfter = false;
+        
         try {
 
             fromDate = this.fromDatePicker.getValue().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
@@ -318,10 +368,9 @@ public class ReportsController implements Initializable {
 
         }
         
-        
         if(!(fromDate.equals("") || toDate.equals("") || reportDropdown.getSelectionModel().isEmpty())){
             
-            if(this.toDatePicker.getValue().isAfter(this.fromDatePicker.getValue())){
+            if((this.toDatePicker.getValue().isAfter(this.fromDatePicker.getValue())) || (this.toDatePicker.getValue().isEqual(this.fromDatePicker.getValue()))){
                 
                 generateReport(reportDropdown.getValue().toString(), this.fromDatePicker.getValue(), this.toDatePicker.getValue());
                 
@@ -336,10 +385,6 @@ public class ReportsController implements Initializable {
             messageLbl.setText("All fields need to be complete");
 
         }
-           
-        
-        
-        
         
     }
     
