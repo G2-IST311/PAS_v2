@@ -30,6 +30,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import pas_v2.Models.EmployeeList;
 import pas_v2.Models.Report_Attendance;
 import pas_v2.Models.Report_Swimmers;
 import pas_v2.Models.Report_Visits;
@@ -99,6 +100,7 @@ public class ReportsController implements Initializable {
     
     private Employee currentEmployee;
     private Pool pool;
+    private EmployeeList employeeList;
     /**
      * Initializes the controller class.
      */
@@ -109,8 +111,9 @@ public class ReportsController implements Initializable {
 
     } 
     
-    public void initData(Employee emp, Pool pool){
+    public void initData(Employee emp, EmployeeList empList, Pool pool){
         this.currentEmployee = emp;
+        this.employeeList = empList;
         this.pool = pool;
         
     }
@@ -341,7 +344,7 @@ public class ReportsController implements Initializable {
         
         //access the controller and call a method
         MainMenuController controller = loader.getController();
-        controller.setEmployee(currentEmployee);
+        controller.initData(currentEmployee, employeeList);
         controller.setPool(pool);
         
         //This line gets the Stage information

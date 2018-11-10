@@ -40,13 +40,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import pas_v2.Models.Employee;
+import pas_v2.Models.EmployeeList;
+import pas_v2.Models.FieldTypeEnum;
 import pas_v2.Models.GenderEnum;
 import pas_v2.Models.Pool;
 import pas_v2.Models.RoleEnum;
 import pas_v2.Models.Swimmer;
-import pas_v2.Models.Visit;
 import pas_v2.Models.Validator;
-import pas_v2.Models.FieldTypeEnum;
+import pas_v2.Models.Visit;
 
 /**
  * FXML Controller class
@@ -57,6 +58,7 @@ public class ViewSwimmerProfileController implements Initializable {
 
     private Employee currentEmployee;
     private Swimmer selectedSwimmer;
+    private EmployeeList employeeList;
     private Pool pool;
     private String selectedDOB;
     private String backScene;
@@ -140,8 +142,7 @@ public class ViewSwimmerProfileController implements Initializable {
         checkoutCol.setCellValueFactory(new PropertyValueFactory<Visit, String>("checkOutTime"));
         
         //validation rules
-        firstName.textProperty().addListener(new Validator(firstName, FieldTypeEnum.NAME));
-        surname.textProperty().addListener(new Validator(surname, FieldTypeEnum.NAME));
+        firstName.textProperty().addListener(new Validator(firstName, FieldTypeEnum.NAME));     
         address.textProperty().addListener(new Validator(address, FieldTypeEnum.ADDRESS));
         city.textProperty().addListener(new Validator(city, FieldTypeEnum.NAME));
         zip.textProperty().addListener(new Validator(zip, FieldTypeEnum.ZIP));
@@ -151,11 +152,13 @@ public class ViewSwimmerProfileController implements Initializable {
         em_surname.textProperty().addListener(new Validator(em_surname, FieldTypeEnum.NAME));
         em_phone.textProperty().addListener(new Validator(em_phone, FieldTypeEnum.PHONE));
         
+        
     }
 
-    public void initData(Employee emp, Swimmer swimmer, Pool pool, String backScene) {
+    public void initData(Employee emp, Swimmer swimmer, EmployeeList empList, Pool pool, String backScene) {
         this.currentEmployee = emp;
         this.selectedSwimmer = swimmer;
+        this.employeeList = empList;
         this.pool = pool;
         this.backScene = backScene;
         
@@ -330,9 +333,8 @@ public class ViewSwimmerProfileController implements Initializable {
             }
 
         } else {
-            if(messageLbl.getText().equals("")){
-                messageLbl.setText("One or more invalid fields.");
-            }
+            messageLbl.setText("All fields need to be filled out");
+
         }
 
     }
@@ -360,79 +362,7 @@ public class ViewSwimmerProfileController implements Initializable {
             check = true;
         }
 
-        if(isPhoneNumber(phone.getText()) && isPhoneNumber(em_phone.getText())){
-            check = true;
-        } else {
-            check = false;
-        }
-        
-        if(!isValidZipCode(zip.getText())){
-            check = false;
-        } 
-        
-        if(!isPotentiallyAState(state.getText())){
-            check = false;
-
-        }
-        
         return check;
-    }
-    
-    
-    private boolean isPotentiallyAState(String s){
-        if(s.length()==2){
-            return true;
-        } 
-        
-        messageLbl.setText(s+ " cannot be a state."); 
-
-        return false;
-        
-    }
-    
-    private boolean isPhoneNumber(String s) {
-        String pattern = "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}";
-
-        
-        if(s.matches(pattern)){
-            return true;
-        } else {     
-            messageLbl.setText(s+ " is not a phone number"); 
-        }
-
-
-        return false;
-    }
-    
-    private boolean isValidZipCode(String s) {
-        boolean isValidZip = false;
-        
-        if(zip.getText().length() == 5){
-            isValidZip=true;
-        } else{
-            messageLbl.setText("Zip must be 5 digits");
-            isValidZip = false;
-            
-        }
-        
-        boolean isInt = false;
-        try
-        {
-           Integer.parseInt(s);
-
-           isInt = true;
-        }
-        catch (NumberFormatException ex)
-        {
-           
-        }
-        
-        
-        if(!isInt){
-            messageLbl.setText("Zip code must be numeric.");
-            isValidZip = false;
-        }
-        return isValidZip;
     }
 
     public void deleteButtonClicked(ActionEvent event) throws IOException {
@@ -481,7 +411,7 @@ public class ViewSwimmerProfileController implements Initializable {
 
         //access the controller and call a method
         FindSwimmerController controller = loader.getController();
-        controller.initData(currentEmployee, pool);
+        controller.initData(currentEmployee, employeeList, pool);
 
         //This line gets the Stage information
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -501,7 +431,7 @@ public class ViewSwimmerProfileController implements Initializable {
         
         //access the controller and call a method
         ViewPoolController controller = loader.getController();
-        controller.initData(currentEmployee, pool);
+        controller.initData(currentEmployee, employeeList, pool);
         
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

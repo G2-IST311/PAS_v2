@@ -26,11 +26,7 @@ public class Report_Visits {
         this.fullName = s.getFullName();
         this.operator = operator;
         this.date = s.getCurrentVisit().getCheckinDate();
-//        this.checkin = s.getCurrentVisit().getCheckInTime();
-//        this.duration = s.getCurrentVisit().getTotalDuration();
-//        this.checkout = s.getCurrentVisit().getCheckOutTime();
-       
-        
+
         this.checkin = v.getCheckInTime();
         this.duration = v.getTotalDuration();
         this.checkout = v.getCheckOutTime();

@@ -29,6 +29,14 @@ public class Credential implements Login {
     public String getEmpID(){
         return this.empID;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
    
     
 }

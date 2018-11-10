@@ -33,9 +33,7 @@ import pas_v2.Models.RoleEnum;
  */
 public class MainMenuController implements Initializable {
 
-    //@FXML MenuBar menuBar;
-    @FXML Button logoutBtn;
-    
+    @FXML MenuBar menuBar;
     @FXML Label greetingLable;
     @FXML Button findSwimmerBtn;
     @FXML Button viewPoolBtn;
@@ -53,9 +51,11 @@ public class MainMenuController implements Initializable {
         
         welcome(emp.getFirstName());
         
-
         reportsBtn.setDisable(!currentEmployee.isFunctionPermitted(RoleEnum.VIEW_REPORTS));
         
+    }
+    public void setPool(Pool pool){
+        this.pool = pool;
     }
     
     public void setEmployee(Employee emp){
@@ -78,12 +78,6 @@ public class MainMenuController implements Initializable {
         return this.pool;
     }
     
-    public void setPool(Pool pool){
-        this.pool = pool;
-        
-
-    }
-    
     public void findSwimmerBtnClicked(ActionEvent event) throws IOException
     {
         FXMLLoader loader = new FXMLLoader();
@@ -94,7 +88,7 @@ public class MainMenuController implements Initializable {
         
         //access the controller and call a method
         FindSwimmerController controller = loader.getController();
-        controller.initData(currentEmployee, pool);
+        controller.initData(currentEmployee, employeeList, pool);
         
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -115,7 +109,7 @@ public class MainMenuController implements Initializable {
         
         //access the controller and call a method
         StaffUIController controller = loader.getController();
-        controller.initData(currentEmployee, employeeList);
+        controller.initData(currentEmployee, employeeList, pool);
         
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -135,7 +129,7 @@ public class MainMenuController implements Initializable {
         
         //access the controller and call a method
         ViewPoolController controller = loader.getController();
-        controller.initData(currentEmployee, pool);
+        controller.initData(currentEmployee, employeeList, pool);
         
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -155,7 +149,7 @@ public class MainMenuController implements Initializable {
         
         //access the controller and call a method
         ReportsController controller = loader.getController();
-        controller.initData(currentEmployee, pool);
+        controller.initData(currentEmployee, employeeList, pool);
         
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -193,9 +187,8 @@ public class MainMenuController implements Initializable {
         if (controller.getDecision().equals("yes")){
             tableViewParent = FXMLLoader.load(getClass().getResource("/pas_v2/Views/LoginUI.fxml"));
             Scene tableViewScene = new Scene(tableViewParent);
-            Stage logoutWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
 
-            //Stage logoutWindow = (Stage) (N).getScene().getWindow();
+            Stage logoutWindow = (Stage) menuBar.getScene().getWindow();
 
             logoutWindow.setScene(tableViewScene);
             logoutWindow.show();

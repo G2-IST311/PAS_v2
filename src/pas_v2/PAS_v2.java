@@ -13,6 +13,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pas_v2.Models.Employee;
+import pas_v2.Models.EmployeeRoleEnum;
 
 /**
  *
@@ -22,7 +24,7 @@ public class PAS_v2 extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-        
+              
         Parent root = FXMLLoader.load(getClass().getResource("/pas_v2/Views/LoginUI.fxml"));
         
         Scene scene = new Scene(root);

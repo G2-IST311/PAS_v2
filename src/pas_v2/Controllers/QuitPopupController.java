@@ -13,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 /**
@@ -25,6 +24,7 @@ public class QuitPopupController implements Initializable {
 
     @FXML Button confirmBtn;
     @FXML Button cancelBtn;
+    
 
     /**
      * Initializes the controller class.

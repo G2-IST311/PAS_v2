@@ -7,9 +7,7 @@ package pas_v2.Controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import pas_v2.Models.Employee;
+import pas_v2.Models.EmployeeList;
 import pas_v2.Models.Pool;
 import pas_v2.Models.RoleEnum;
 import pas_v2.Models.Swimmer;
@@ -53,6 +52,7 @@ public class FindSwimmerController implements Initializable {
 
     private Employee currentEmployee;
     private Pool pool;
+    private EmployeeList employeeList;
 
     /**
      * Initializes the controller class.
@@ -76,9 +76,10 @@ public class FindSwimmerController implements Initializable {
     } 
     
     
-    public void initData(Employee emp, Pool pool){
+    public void initData(Employee emp, EmployeeList empList, Pool pool){
         this.currentEmployee=emp;
         this.pool = pool;
+        this.employeeList = empList;
         
         tableView.getItems().setAll(pool.getSwimmers());
 
@@ -96,7 +97,7 @@ public class FindSwimmerController implements Initializable {
         
         //access the controller and call a method
         RegisterSwimmerController controller = loader.getController();
-        controller.initData(currentEmployee, pool);
+        controller.initData(currentEmployee, employeeList, pool);
         
         //This line gets the Stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -110,10 +111,7 @@ public class FindSwimmerController implements Initializable {
     public void performSearch(){
         String keyword = searchField.getText();
         
-        
         tableView.getItems().setAll(pool.searchSwimmer(keyword));
-
-        
     }
     
     public void viewProfileBtnClicked(ActionEvent event) throws IOException{
@@ -128,7 +126,7 @@ public class FindSwimmerController implements Initializable {
         ViewSwimmerProfileController controller = loader.getController();
         
         try{
-            controller.initData(currentEmployee, (Swimmer)tableView.getSelectionModel().getSelectedItem(), pool, "FindSwimmer");
+            controller.initData(currentEmployee, (Swimmer)tableView.getSelectionModel().getSelectedItem(), employeeList, pool, "FindSwimmer");
             //This line gets the Stage information
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 
@@ -204,7 +202,7 @@ public class FindSwimmerController implements Initializable {
         
         //access the controller and call a method
         MainMenuController controller = loader.getController();
-        controller.setEmployee(currentEmployee);
+        controller.initData(currentEmployee, employeeList);
         controller.setPool(pool);
         
         //This line gets the Stage information

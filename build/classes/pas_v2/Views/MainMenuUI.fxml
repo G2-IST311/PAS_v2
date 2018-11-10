@@ -7,8 +7,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pas_v2.Controllers.MainMenuController">
+<AnchorPane  id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pas_v2.Controllers.MainMenuController">
    <children>
+      <MenuBar fx:id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="PAS">
+            <items>
+              <MenuItem fx:id="logoutButton" mnemonicParsing="false" onAction="#logoutBtnClicked" text="Log Out" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
       <Pane layoutX="319.0" layoutY="166.0" prefHeight="373.0" prefWidth="282.0" AnchorPane.topAnchor="166.0">
          <children>
             <Button fx:id="findSwimmerBtn" layoutX="28.0" layoutY="38.0" mnemonicParsing="false" onAction="#findSwimmerBtnClicked" prefHeight="40.0" prefWidth="223.0" text="Find Swimmer" />

@@ -23,11 +23,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import pas_v2.Models.ActiveSwimmerData;
 import pas_v2.Models.Employee;
+import pas_v2.Models.EmployeeList;
 import pas_v2.Models.Pool;
-import pas_v2.Models.RoleEnum;
-import pas_v2.Models.GenderEnum;
 import pas_v2.Models.Swimmer;
-import pas_v2.Models.Visit;
 
 /**
  * FXML Controller class
@@ -51,6 +49,7 @@ public class ViewPoolController implements Initializable {
     
     private Employee currentEmployee;
     private Pool pool;
+    private EmployeeList employeeList;
     
     
     
@@ -74,8 +73,9 @@ public class ViewPoolController implements Initializable {
         
     }
     
-    public void initData(Employee emp, Pool pool){
+    public void initData(Employee emp, EmployeeList empList, Pool pool){
         this.currentEmployee = emp;
+        this.employeeList = empList;
         this.pool = pool;
         pool.constructActivePool(pool.getActiveSwimmers());
         tableView.getItems().setAll(pool.getActivePool());
@@ -99,7 +99,7 @@ public class ViewPoolController implements Initializable {
             tempSwimmer.setVisits(tempActive.getVisits());
             tempSwimmer.setNote(tempActive.getNote());
             
-            controller.initData(currentEmployee, tempSwimmer, pool, "ViewPool");
+            controller.initData(currentEmployee, tempSwimmer, employeeList, pool, "ViewPool");
             controller.setCheckedStatusLabel(true);
             controller.toggleEditableFields(false);     
             
@@ -155,7 +155,7 @@ public class ViewPoolController implements Initializable {
         
         //access the controller and call a method
         MainMenuController controller = loader.getController();
-        controller.setEmployee(currentEmployee);
+        controller.initData(currentEmployee, employeeList);
         controller.setPool(pool);
         
         //This line gets the Stage information

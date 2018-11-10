@@ -15,7 +15,7 @@
    <children>
       <Pane layoutX="114.0" layoutY="88.0" prefHeight="450.0" prefWidth="351.0">
          <children>
-            <VBox alignment="TOP_RIGHT" layoutX="14.0" layoutY="47.0" prefHeight="356.0" prefWidth="121.0">
+            <VBox alignment="TOP_RIGHT" layoutX="35.0" layoutY="47.0" prefHeight="356.0" prefWidth="100.0">
                <children>
                   <Label text="First Name:">
                      <padding>
@@ -42,7 +42,7 @@
                         <Insets bottom="15.0" />
                      </padding>
                   </Label>
-                  <Label layoutX="81.0" layoutY="138.0" text="5-digit zip code:">
+                  <Label layoutX="81.0" layoutY="138.0" text="Zip code:">
                      <padding>
                         <Insets bottom="15.0" />
                      </padding>

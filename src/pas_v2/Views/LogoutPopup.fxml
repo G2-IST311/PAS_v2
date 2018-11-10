@@ -11,7 +11,7 @@
     <children>
        <Button id="confirmBtn" layoutX="279.0" layoutY="210.0" mnemonicParsing="false" onAction="#confirmBtnClicked" prefHeight="40.0" prefWidth="77.0" text="Confirm" />
        <Button id="cancelBtn" layoutX="68.0" layoutY="210.0" mnemonicParsing="false" onAction="#cancelBtnClicked" prefHeight="40.0" prefWidth="77.0" text="Cancel" />
-       <Label id="warning" alignment="CENTER" layoutX="63.0" layoutY="77.0" prefHeight="40.0" prefWidth="297.0" text="You have selected to logout the current user." />
-       <Label id="question" alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="125.0" prefHeight="40.0" prefWidth="151.0" text="Are you sure?" textAlignment="CENTER" />
+       <Label id="warning" alignment="CENTER" layoutX="60.0" layoutY="85.0" prefHeight="40.0" prefWidth="303.0" text="You have selected to logout the current user." />
+       <Label id="question" alignment="CENTER" layoutX="137.0" layoutY="125.0" prefHeight="40.0" prefWidth="150.0" text="Are you sure?" textAlignment="CENTER" />
     </children>
 </AnchorPane>

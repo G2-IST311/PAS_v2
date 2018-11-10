@@ -9,6 +9,7 @@ public class Admin extends Employee {
     public Admin(String newFirstName, String newLastName, EmployeeRoleEnum role) {
         super(newFirstName, newLastName, role);
 
+
     }
 
     @Override
