@@ -179,7 +179,7 @@ public class Swimmer implements Serializable{
         return photoPath;
     }
     
-    public String getSwimmerInformation(){
+    public String getSwimmerInfo(){
         String temp = name + " " + lastname + ", " + this.gender.getValue() + ", " 
                 +  dob+ ", " +  address+ ", " +  city+ ", " +  zip+ ", " +  state+ ", "
                 +  phone+ ", " +  skill+ ", " +  status +", " +note +", "+ checkedStatus;

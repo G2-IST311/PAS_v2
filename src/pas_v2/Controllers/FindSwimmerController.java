@@ -153,7 +153,7 @@ public class FindSwimmerController implements Initializable {
     
     public void checkoutButtonClicked(){
         try{
-            pool.changeSwimmerStatus((Swimmer)tableView.getSelectionModel().getSelectedItem(), false);
+            pool.changeSwimmerStatus((Swimmer)tableView.getSelectionModel().getSelectedItem(), false);         
             checkinButton.setDisable(false);
             checkoutButton.setDisable(true);
             tableView.getItems().setAll(pool.getSwimmers());

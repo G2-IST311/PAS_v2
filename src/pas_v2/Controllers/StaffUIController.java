@@ -63,12 +63,7 @@ public class StaffUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        try {
-            this.employeeList = new EmployeeList();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(StaffUIController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        this.employeeList = new EmployeeList();       
         nameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("fullName"));
         userNameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("userName"));
         roleCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("roleAsString"));
@@ -171,7 +166,7 @@ public class StaffUIController implements Initializable {
         
         if (controller.getDecision().equals("yes")){
             employeeList.removeEmployee((Employee)tableView.getSelectionModel().getSelectedItem());
-            employeeList.saveEmployeeList();
+            employeeList.writeEmployeeList();
             tableView.getItems().setAll(employeeList.getEmployees());
             //TODO: create remove employee logic, only admins can remove
             

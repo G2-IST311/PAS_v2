@@ -16,9 +16,9 @@ public class EmployeeList {
     private ArrayList<Employee> employees;
     private Storage storage;
     
-    public EmployeeList() throws FileNotFoundException{  
+    public EmployeeList() {  
         storage = new Storage();
-        this.fetchEmployeesFromFile();
+        this.readEmployeeList();
     }
     
     public EmployeeList(ArrayList<Employee> list){
@@ -78,14 +78,14 @@ public class EmployeeList {
     }
     
     public void refreshEmployeeList() throws FileNotFoundException{
-        fetchEmployeesFromFile();
+        readEmployeeList();
     }
     
-    public void saveEmployeeList(){
+    public void writeEmployeeList(){
         storage.write(employees, Employee.class);
     }
     
-    private void fetchEmployeesFromFile() throws FileNotFoundException{
+    private void readEmployeeList() {
         employees  = storage.read(Employee.class);
     }
 }

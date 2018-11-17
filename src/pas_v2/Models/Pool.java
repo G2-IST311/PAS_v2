@@ -36,12 +36,9 @@ public class Pool {
         storage = new Storage();
         
         this.readSwimmerListFile();
-
         if(swimmers.isEmpty() || swimmers == null){
-
-            this.writeSwimmerListFile();
-            this.readSwimmerListFile();
-
+           this.writeSwimmerListFile();
+           this.readSwimmerListFile();
         }
         
     }
@@ -56,12 +53,8 @@ public class Pool {
                 try{
                     LocalDate swimmerCheckin = v.getCheckinDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     LocalDate swimmerCheckout = v.getCheckoutDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
                     if(((swimmerCheckin.isAfter(from) || swimmerCheckin.isEqual(from)) && (swimmerCheckout.isBefore(to)) || swimmerCheckout.isEqual(to))){
-
                         tempVisits.add(v);
-
-
                     }
                 
                 } catch (NullPointerException e){
@@ -122,6 +115,16 @@ public class Pool {
     
     public void changeSwimmerStatus(Swimmer tempSwimmer, boolean status){
         swimmers.get(swimmers.indexOf(tempSwimmer)).setCheckedStatus(status);
+        if (status){
+        //check-in
+            visits.add(new Visit(tempSwimmer));}
+        else {
+        //check-out
+            //
+            visits.remove(tempSwimmer);
+        }
+        
+        storage.write(visits, Visit.class);
         
         this.writeSwimmerListFile();
     }
@@ -135,7 +138,7 @@ public class Pool {
         ArrayList<Swimmer> tempList = new ArrayList<>();
         
         for(Swimmer s : swimmers){
-            if(s.getSwimmerInformation().toLowerCase().contains(keyword.toLowerCase())){
+            if(s.getSwimmerInfo().toLowerCase().contains(keyword.toLowerCase())){
                 tempList.add(s);
             }
         }
@@ -147,7 +150,7 @@ public class Pool {
         ArrayList<ActiveSwimmerData> tempList = new ArrayList<>();
         
         for(Swimmer tempActive : this.activeSwimmers){
-            if(tempActive.getSwimmerInformation().toLowerCase().contains(keyword.toLowerCase())){
+            if(tempActive.getSwimmerInfo().toLowerCase().contains(keyword.toLowerCase())){
                 
                 
                 ActiveSwimmerData tempSwimmer = new ActiveSwimmerData(tempActive);
@@ -171,12 +174,12 @@ public class Pool {
         storage.write(swimmers, Swimmer.class);
 
     }
-    
+     
     public void printSwimmerList(){
         System.out.println("The SwimmerList has these swimmers:");
         for(int i = 0; i < swimmers.size(); i++){
             Swimmer currentUser = (Swimmer) swimmers.get(i);
-            System.out.println(currentUser.getSwimmerInformation());
+            System.out.println(currentUser.getSwimmerInfo());
         }
     }
 

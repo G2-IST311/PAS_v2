@@ -62,7 +62,6 @@ public class NewEmployeeController implements Initializable {
 
     private EmployeeList employeeList;
     private Employee currentEmployee;
-    private Storage storage;
     private EmployeeRoleEnum role;
     private Pool pool;
 
@@ -82,8 +81,7 @@ public class NewEmployeeController implements Initializable {
         //validation rules
         fNameTxtField.textProperty().addListener(new Validator(fNameTxtField, FieldTypeEnum.NAME));
         lNameTxtField.textProperty().addListener(new Validator(lNameTxtField, FieldTypeEnum.NAME));
-        storage = new Storage();
-
+        
 //        try { 
 //            employeeList = new EmployeeList();
 //            employeeList.refreshEmployeeList();
@@ -109,7 +107,7 @@ public class NewEmployeeController implements Initializable {
                 newEmployee.setCredential(empPWField.getText());
                 employeeList.addEmployee(newEmployee);
                 
-                storage.write(employeeList.getEmployees(), Employee.class);
+                employeeList.writeEmployeeList();
                 //employeeList.saveEmployee(toogleGroupValue.toLowerCase(), fNameTxtField.getText(), lNameTxtField.getText(), empPWField.getText());
                 MsgLabel.setText("New Employee saved Successfully");
                 navigateToStaffUI(ae);

@@ -31,6 +31,7 @@ public class Visit implements Serializable{
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");  
         LocalDateTime now = LocalDateTime.now(); 
         day = dtf.format(now);
+        checkInTime = new Date();
         
     }
     
@@ -112,11 +113,12 @@ public class Visit implements Serializable{
      * @param checkOutTime the checkOutTime to set
      */
     public void setCheckOut(Date checkOutTime) {
-        this.checkOutTime = checkOutTime;
-        
-        this.totalDuration = (checkInTime.getTime() - checkOutTime.getTime()) / (60 * 1000) % 60;
-        
-        
+        this.checkOutTime = checkOutTime;       
+        this.totalDuration = (checkInTime.getTime() - checkOutTime.getTime()) / (60 * 1000) % 60;      
+    }
+    
+    public void setCheckOut(){
+        this.setCheckOut(new Date());            
     }
     
     

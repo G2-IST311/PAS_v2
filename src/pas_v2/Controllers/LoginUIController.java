@@ -52,8 +52,7 @@ public class LoginUIController implements Initializable {
 
         empIdField.textProperty().addListener(new Validator(empIdField, FieldTypeEnum.LOGIN));
         storage = new Storage();
-        employeeList = new EmployeeList(storage.read(Employee.class));
-
+        employeeList = new EmployeeList();
         statusLabel.setText("");
 
     }
