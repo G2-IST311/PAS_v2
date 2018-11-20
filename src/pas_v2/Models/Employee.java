@@ -84,5 +84,21 @@ public class Employee implements Person {
     public String getUserName() {
         return credential.getEmpID();
     }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setRole(EmployeeRoleEnum role) {
+        this.role = role;
+    }
+
+    public void setCredential(Credential credential) {
+        this.credential = credential;
+    }
     
 }
