@@ -62,7 +62,6 @@ public class StaffUIController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         this.employeeList = new EmployeeList();       
         nameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("fullName"));
         userNameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("userName"));
@@ -84,8 +83,6 @@ public class StaffUIController implements Initializable {
         isAdmin = currentEmployee.isFunctionPermitted(RoleEnum.CREATE_EMPLOYEE); 
         
         newEmpBtn.setDisable(!isAdmin);
-
-        
     }
    
     
@@ -126,6 +123,9 @@ public class StaffUIController implements Initializable {
         //access the controller and call a method
         EditEmpPopupController controller = loader.getController();
         
+        Employee targetEmp = (Employee)tableView.getSelectionModel().getSelectedItem();
+        controller.initData(targetEmp);
+        
         //This line gets the Stage information
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -134,9 +134,8 @@ public class StaffUIController implements Initializable {
         window.showAndWait();
         
         if (controller.getDecision().equals("yes")){
-            
-            //TODO: create remove employee logic, only admins can remove
-            
+            employeeList.writeEmployeeList();
+            tableView.getItems().setAll(employeeList.getEmployees());    
         }
     }
     
@@ -167,9 +166,7 @@ public class StaffUIController implements Initializable {
         if (controller.getDecision().equals("yes")){
             employeeList.removeEmployee((Employee)tableView.getSelectionModel().getSelectedItem());
             employeeList.writeEmployeeList();
-            tableView.getItems().setAll(employeeList.getEmployees());
-            //TODO: create remove employee logic, only admins can remove
-            
+            tableView.getItems().setAll(employeeList.getEmployees());         
         }
     }
     
@@ -198,7 +195,6 @@ public class StaffUIController implements Initializable {
             removeBtn.setDisable(false);
             editBtn.setDisable(false);
         }
-        
     }
     
     public void performSearch(){

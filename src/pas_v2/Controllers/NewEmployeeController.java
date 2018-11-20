@@ -139,7 +139,6 @@ public class NewEmployeeController implements Initializable {
         fNameTxtField.setText("");
         lNameTxtField.setText("");
         empPWField.setText("");
-
     }
 
     public boolean containsForbiddenCharacters() {

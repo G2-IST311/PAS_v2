@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="645.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pas_v2.Controllers.EditEmpPopupController">
+<AnchorPane id="AnchorPane" prefHeight="645.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pas_v2.Controllers.EditEmpPopupController">
    <children>
       <Label fx:id="titleLabel" alignment="CENTER" layoutX="178.0" layoutY="34.0" text="Edit Employee">
          <font>
@@ -43,12 +43,13 @@
             <ToggleGroup fx:id="roleSelector" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="rbOperator" layoutX="299.0" layoutY="435.0" mnemonicParsing="false" selected="true" text="Operator" toggleGroup="$roleSelector" />
+      <RadioButton fx:id="rbOperator" layoutX="299.0" layoutY="435.0" mnemonicParsing="false" selected="false" text="Operator" toggleGroup="$roleSelector" />
       <Label fx:id="MsgLabel" alignment="CENTER" layoutX="4.0" layoutY="354.0" prefHeight="17.0" prefWidth="393.0" textFill="#dd0707" />
       <Label layoutX="111.0" layoutY="380.0" text="Confirm New Password:" />
 
       <Button fx:id="cnclBtn" layoutX="178.0" layoutY="535.0" mnemonicParsing="false" onAction="#cnclBtnClicked" prefHeight="36.0" prefWidth="105.0" text="Cancel" />
       <Button fx:id="saveBtn" layoutX="318.0" layoutY="535.0" mnemonicParsing="false" onAction="#saveBtnClicked" prefHeight="36.0" prefWidth="105.0" text="Save" />
+      <Label fx:id="msgLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="11.0" layoutY="100.0" prefHeight="17.0" prefWidth="570.0" text="Error Message" textFill="RED" />
 
    </children>
 </AnchorPane>

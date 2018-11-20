@@ -24,6 +24,12 @@
                <font>
                   <Font size="9.0" />
                </font></PasswordField>
+                           <Label layoutX="8.0" layoutY="222.0" text="Confirm Password:" />
+            <PasswordField fx:id="confPWField1" layoutX="166.0" layoutY="217.0" prefHeight="27.0" prefWidth="167.0">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </PasswordField>
             <RadioButton fx:id="rbAdmin" layoutX="166.0" layoutY="305.0" mnemonicParsing="false" text="Admin">
                <toggleGroup>
                   <ToggleGroup fx:id="roleSelector" />
@@ -31,13 +37,6 @@
             </RadioButton>
             <RadioButton fx:id="rbOperator" layoutX="167.0" layoutY="276.0" mnemonicParsing="false" selected="true" text="Operator" toggleGroup="$roleSelector" />
             <Label fx:id="MsgLabel" alignment="CENTER" layoutX="4.0" layoutY="354.0" prefHeight="17.0" prefWidth="393.0" textFill="#dd0707" />
-            <Label layoutX="8.0" layoutY="222.0" text="Confirm Password:" />
-            <PasswordField fx:id="confPWField1" layoutX="166.0" layoutY="217.0" prefHeight="27.0" prefWidth="167.0">
-               <font>
-                  <Font size="9.0" />
-               </font>
-            </PasswordField>
-            
          </children>
       </Pane>
       <Label fx:id="titleLabel" alignment="CENTER" layoutX="189.0" layoutY="36.0" text="New Employee" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">

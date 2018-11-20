@@ -93,6 +93,11 @@ public class Employee implements Person {
         this.lastName = lastName;
     }
 
+    public EmployeeRoleEnum getRole() {
+        return role;
+    }
+
+    
     public void setRole(EmployeeRoleEnum role) {
         this.role = role;
     }
