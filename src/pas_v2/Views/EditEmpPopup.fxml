@@ -16,12 +16,21 @@
             <Font size="39.0" />
          </font>
       </Label>
-      <Label layoutX="179.0" layoutY="148.0" text="First Name:" />
-      <Label layoutX="179.0" layoutY="208.0" text="Last Name:" />
+      <Label layoutX="179.0" layoutY="148.0" text="First Name:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="179.0" layoutY="208.0" text="Last Name:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
       <Label layoutX="157.0" layoutY="321.0" text="New Password:" />
       <TextField fx:id="fNameTxtField" layoutX="296.0" layoutY="143.0" />
       <TextField fx:id="lNameTxtField" layoutX="296.0" layoutY="203.0" />
-      <Label layoutX="141.0" layoutY="265.0" text="Current Password:" />
+      <Label layoutX="141.0" layoutY="265.0" text="Current Password:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
       <PasswordField fx:id="currentPWField" layoutX="296.0" layoutY="260.0" prefHeight="27.0" prefWidth="167.0">
          <font>
             <Font size="9.0" />
