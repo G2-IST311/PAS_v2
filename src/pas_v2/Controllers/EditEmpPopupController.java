@@ -5,14 +5,18 @@
  */
 package pas_v2.Controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -81,11 +85,13 @@ public class EditEmpPopupController implements Initializable {
         }
         
         else{
+            
+            
             currentEmployee.setFirstName(fNameTxtField.getText());
             currentEmployee.setLastName(lNameTxtField.getText());   
-            
+
             if(!newPWField.getText().equals("")){
-            currentEmployee.getCredential().setPassword(newPWField.getText());
+                currentEmployee.getCredential().setPassword(newPWField.getText());
             }
 
             if (rbAdmin.isSelected()){
@@ -94,9 +100,21 @@ public class EditEmpPopupController implements Initializable {
 
             else if (rbOperator.isSelected()){
                 currentEmployee.setRole(EmployeeRoleEnum.Operator);
-            }   
+            }  
+                
             
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Employee updated!");
+            String s = "Employee data updated.";
+            alert.setContentText(s);
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+
             popup.close();
+
+           
+            
         }
     }
     
