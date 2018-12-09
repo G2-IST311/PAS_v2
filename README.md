@@ -19,6 +19,21 @@ A)    NetBeans IDE
 B)    JDK 1.8 
 C)    GSON 2.8.X
 
+Login credentials for PAS
+    Admins:
+        empID = scottmi
+        password = mypass
+
+      empID = shrutedw
+      password = sheriff
+
+    Operators:
+      empID = squarepantssp
+      password = pineapple
+
+      empID = starpa
+      password = rock
+
 Support 
 Support for the Pool Access System can be found at pas_support@pas.com 
 
